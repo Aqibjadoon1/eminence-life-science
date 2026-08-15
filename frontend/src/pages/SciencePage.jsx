@@ -88,8 +88,10 @@ export default function SciencePage() {
       <section className={`section ${styles.labSection}`}>
         <div className={`container ${styles.labInner}`}>
           <LabImage
-            src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=900&q=80"
-            alt="Scientist examining serum sample under microscope"
+            src="/images/2.jpg"
+            alt="Eminence product and laboratory imagery"
+            width={736}
+            height={920}
           />
           <LabImage
             src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=900&q=80"
@@ -141,14 +143,14 @@ function PillarCard({ pillar, delay }) {
   );
 }
 
-function LabImage({ src, alt }) {
+function LabImage({ src, alt, width = 600, height = 400 }) {
   const { ref, isVisible } = useIntersectionObserver();
   return (
     <div
       ref={ref}
       className={`${styles.labImgWrap} ${isVisible ? styles.visible : ''}`}
     >
-      <img src={src} alt={alt} width={600} height={400} loading="lazy" />
+      <img src={src} alt={alt} width={width} height={height} loading="lazy" />
     </div>
   );
 }
