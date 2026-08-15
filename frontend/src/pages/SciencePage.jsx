@@ -51,10 +51,10 @@ export default function SciencePage() {
       <section className={styles.hero}>
         <div className={styles.heroBg} aria-hidden="true">
           <img
-            src="https://images.unsplash.com/photo-1581093806997-124204d9fa9d?w=1600&q=80"
+            src="/images/1.png"
             alt=""
-            width={1600}
-            height={700}
+            width={1537}
+            height={1023}
           />
           <div className={styles.heroOverlay} />
         </div>
