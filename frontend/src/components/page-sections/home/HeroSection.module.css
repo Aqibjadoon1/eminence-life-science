@@ -33,6 +33,8 @@
   display: block;
 }
 
+.imgMobile { display: none; }
+
 .slideOverlay {
   position: absolute;
   inset: 0;
@@ -235,6 +237,9 @@
   .hero {
     max-height: 700px;
   }
+
+  .imgDesktop { display: none; }
+  .imgMobile  { display: block; }
 
   .content {
     align-items: center;

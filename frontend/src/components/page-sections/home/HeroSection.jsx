@@ -17,6 +17,7 @@ const SLIDES = [
     cta: { label: 'Shop Serums', href: '/shop/brightening' },
     ctaSecondary: { label: 'Our Science', href: '/our-science' },
     image: '/images/hero1.png',
+    imageMobile: 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=1600&q=85',
     imagePosition: 'center 30%',
   },
   {
@@ -106,6 +107,7 @@ export default function HeroSection() {
         >
           <div className={styles.slideBg}>
             <img
+              className={styles.imgDesktop}
               src={s.image}
               alt=""
               width={1600}
@@ -114,6 +116,18 @@ export default function HeroSection() {
               fetchpriority={i === 0 ? 'high' : 'auto'}
               style={{ objectPosition: s.imagePosition }}
             />
+            {s.imageMobile && (
+              <img
+                className={styles.imgMobile}
+                src={s.imageMobile}
+                alt=""
+                width={1600}
+                height={900}
+                loading={i === 0 ? 'eager' : 'lazy'}
+                fetchpriority={i === 0 ? 'high' : 'auto'}
+                style={{ objectPosition: s.imagePosition }}
+              />
+            )}
             <div className={styles.slideOverlay} />
           </div>
         </div>
