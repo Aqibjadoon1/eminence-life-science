@@ -13,7 +13,8 @@
     "db:seed:002": "node src/db/seed_002_new_products.js",
     "db:reset": "node src/db/migrate.js && node src/db/seed.js",
     "db:expand": "node src/db/migrate_002_expand_catalog.js && node src/db/seed_002_new_products.js",
-    "db:setup": "node src/db/migrate.js && node src/db/migrate_002_expand_catalog.js && node src/db/seed.js && node src/db/seed_002_new_products.js"
+    "db:setup": "node src/db/migrate.js && node src/db/migrate_002_expand_catalog.js && node src/db/seed.js && node src/db/seed_002_new_products.js && node src/db/migrate_003_product_photos.js",
+    "db:migrate:003": "node src/db/migrate_003_product_photos.js"
   },
   "dependencies": {
     "bcryptjs": "2.4.3",
