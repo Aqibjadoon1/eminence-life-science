@@ -23,12 +23,7 @@ services:
     region: oregon
     plan: free
     buildCommand: npm install
-    startCommand: npm start
-    preDeployCommand: >-
-      npm run db:migrate &&
-      npm run db:migrate:002 &&
-      npm run db:seed &&
-      npm run db:seed:002
+    startCommand: npm run db:setup && npm start
     envVars:
       - key: DATABASE_URL
         fromDatabase:
