@@ -191,3 +191,24 @@ npm run dev                   # starts on :5173, proxies /api → :5000
 | http://localhost:5173/wishlist | Wishlist |
 | http://localhost:5173/our-science | Science page |
 | http://localhost:5000/api/health | API health check |
+
+## Refactor F — Premium 4K promo-tile images (PromoBannerPair)
+
+- Replaced the two "Enhance Your Beauty" promo-tile photos with premium product photography that matches the gold/ivory brand:
+  - Tile 1 "Bestselling Serums" → Unsplash amber glass dropper bottle with golden oil (photo-1608571423902-eed4a5ad8108) — 3840x5760 source.
+  - Tile 2 "Medicated Bars & Face Washes" → handmade soap bars wrapped in twine with lavender (photo-1600857544200-b2f666a9a2ec) — 3840x2561 source.
+- Old images were off-topic: tile 2 was a living-room interior photo; tile 1 a plain white tube.
+- Added responsive srcset (700/1200/1600/2400/3840w) with sizes hint; 4K source verified via curl (3840 wide JPEGs).
+- Verified live at mobile width: both tiles render crisply, text/CTA legible over the new photos.
+
+## Refactor G — Colorful premium LifestyleStrip images (section[8])
+
+- Replaced the 5 flat product-box photos (and one off-brand white-tube stock) in the homepage lifestyle strip with colorful premium product photography, all warm/on-palette with the gold-ivory brand:
+  1. Skincare bottles with rose petals (photo-1580870069867) — 3840x5120
+  2. Amber oil bottles + matcha/charcoal jars (photo-1611930022073) — 3840x5761
+  3. Skincare on peach spa towels (photo-1601049676869) — 3840x2553
+  4. Dropper serum application, editorial (photo-1620916297397) — 3840x5760
+  5. Colorful beauty flat lay on peach (photo-1596462502278) — 3840x3840
+- All 5 verified: CDN 200 + genuine 3840px-wide sources; browser loads all 5 in the strip.
+- Added responsive srcset (320/640/1200/2400/3840w) + sizes hint; honest descriptive alt text.
+- Build: 0 errors.

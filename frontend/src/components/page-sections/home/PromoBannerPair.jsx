@@ -12,16 +12,18 @@ const TILES = [
     title: 'Bestselling Serums',
     body: 'Our most-loved vitamin C, retinol, and peptide formulas — chosen by your skin.',
     cta: { label: 'Shop Serums', href: '/shop/brightening' },
-    image: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=900&q=80',
-    imagePosition: 'center 30%',
+    // 4K-capable amber oil bottle — warm, premium, on-brand
+    image: 'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&q=80',
+    imagePosition: 'center 40%',
   },
   {
     eyebrow: 'New In',
     title: 'Medicated Bars & Face Washes',
     body: 'Clinical cleansing actives for every concern — anti-acne, dry skin, and beyond.',
     cta: { label: 'Shop Cleansers', href: '/shop/soaps' },
-    image: 'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=900&q=80',
-    imagePosition: 'center 40%',
+    // 4K-capable handmade soap bars — warm kraft tones match the brand
+    image: 'https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?auto=format&fit=crop&q=80',
+    imagePosition: 'center 45%',
   },
 ];
 
@@ -51,7 +53,11 @@ function PromoTile({ tile, delay }) {
     >
       <div className={styles.tileBg} aria-hidden="true">
         <img
-          src={tile.image}
+          src={`${tile.image}&w=1600`}
+          srcSet={[700, 1200, 1600, 2400, 3840]
+            .map((w) => `${tile.image}&w=${w} ${w}w`)
+            .join(', ')}
+          sizes="(max-width: 768px) 92vw, 44vw"
           alt=""
           width={700}
           height={480}
