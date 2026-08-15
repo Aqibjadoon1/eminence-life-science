@@ -306,38 +306,51 @@ const products = [
 
 // ──────────────────────────────────────────────────────────────
 //  SEED RUNNER
+//  NON-DESTRUCTIVE: upserts by slug/sku so it is safe to re-run
+//  (used automatically on Render pre-deploy without wiping data)
 // ──────────────────────────────────────────────────────────────
 async function seed() {
   const client = await pool.connect();
   try {
-    console.log('🌱 Seeding database...');
+    console.log('🌱 Seeding database (non-destructive upsert)...');
     await client.query('BEGIN');
 
-    // Truncate in correct dependency order
-    await client.query(`
-      TRUNCATE newsletter_subscribers, order_items, orders, cart_items, carts,
-               reviews, products, categories, addresses, users RESTART IDENTITY CASCADE
-    `);
-
-    // Insert categories and build slug → id map
+    // Insert categories (upsert) and build slug → id map
     const categoryMap = {};
     for (const cat of categories) {
       const res = await client.query(
-        'INSERT INTO categories(name, slug) VALUES($1, $2) RETURNING id',
+        `INSERT INTO categories(name, slug) VALUES($1, $2)
+         ON CONFLICT(slug) DO UPDATE SET name = EXCLUDED.name
+         RETURNING id`,
         [cat.name, cat.slug]
       );
       categoryMap[cat.slug] = res.rows[0].id;
     }
     console.log('  ✅ Categories seeded:', Object.keys(categoryMap).join(', '));
 
-    // Insert products
+    // Insert products (upsert by sku)
     for (const p of products) {
       await client.query(
         `INSERT INTO products (
            name, slug, description, price, sale_price, sku, stock,
            category_id, concern_tags, key_ingredients, how_to_use,
            full_ingredient_list, image_urls, is_featured, is_best_seller
-         ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)`,
+         ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)
+         ON CONFLICT(sku) DO UPDATE SET
+           name = EXCLUDED.name,
+           slug = EXCLUDED.slug,
+           description = EXCLUDED.description,
+           price = EXCLUDED.price,
+           sale_price = EXCLUDED.sale_price,
+           stock = EXCLUDED.stock,
+           category_id = EXCLUDED.category_id,
+           concern_tags = EXCLUDED.concern_tags,
+           key_ingredients = EXCLUDED.key_ingredients,
+           how_to_use = EXCLUDED.how_to_use,
+           full_ingredient_list = EXCLUDED.full_ingredient_list,
+           image_urls = EXCLUDED.image_urls,
+           is_featured = EXCLUDED.is_featured,
+           is_best_seller = EXCLUDED.is_best_seller`,
         [
           p.name, p.slug, p.description,
           p.price, p.sale_price || null,

@@ -1,0 +1,65 @@
+# Eminence Life Science — Render Blueprint (Infrastructure as Code)
+#
+# Resources created:
+#   - PostgreSQL        : eminence-db
+#   - Web service (API) : eminence-api  (https://eminence-api.onrender.com)
+#   - Static site (UI)  : eminence-frontend (https://eminence-frontend.onrender.com)
+#
+# Deploy: New +  →  Blueprint  →  "eminence-life-science" repo
+
+databases:
+  - name: eminence-db
+    plan: free
+    region: oregon
+    databaseName: eminence_db
+    user: eminence
+
+services:
+  # ── API (Express + Postgres) ────────────────────────────────
+  - type: web
+    name: eminence-api
+    runtime: node
+    rootDir: backend
+    region: oregon
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    preDeployCommand: >-
+      npm run db:migrate &&
+      npm run db:migrate:002 &&
+      npm run db:seed &&
+      npm run db:seed:002
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: eminence-db
+          property: connectionString
+      - key: DATABASE_SSL
+        value: "true"
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: NODE_ENV
+        value: production
+      - key: CLIENT_URL
+        value: https://eminence-frontend.onrender.com
+
+  # ── Frontend (React static build) ─────────────────────────────
+  - type: web
+    name: eminence-frontend
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      - key: VITE_API_URL
+        value: /api
+    routes:
+      - type: rewrite
+        source: /api/*
+        destination: https://eminence-api.onrender.com/api/*
+
+  # ── Custom domain (optional — uncomment and add your domain) ──
+  # domains:
+  #   - eminencelife.science
