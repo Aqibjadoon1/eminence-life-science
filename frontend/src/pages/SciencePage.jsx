@@ -88,10 +88,10 @@ export default function SciencePage() {
       <section className={`section ${styles.labSection}`}>
         <div className={`container ${styles.labInner}`}>
           <LabImage
-            src="/images/2.jpg"
+            src="/images/1.png"
             alt="Eminence product and laboratory imagery"
-            width={736}
-            height={920}
+            width={1537}
+            height={1023}
           />
           <LabImage
             src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=900&q=80"
