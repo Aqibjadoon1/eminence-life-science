@@ -33,7 +33,7 @@
   display: block;
 }
 
-.imgMobile { display: none; }
+.slideBg .imgMobile { display: none; }
 
 .slideOverlay {
   position: absolute;
@@ -238,8 +238,8 @@
     max-height: 700px;
   }
 
-  .imgDesktop { display: none; }
-  .imgMobile  { display: block; }
+  .slideBg .imgDesktop { display: none; }
+  .slideBg .imgMobile  { display: block; }
 
   .content {
     align-items: center;
