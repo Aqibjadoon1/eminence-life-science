@@ -17,6 +17,10 @@ dotenv.config();
 const app  = express();
 const PORT = process.env.PORT || 5000;
 
+// Trust the first proxy hop so rate limiting & IP detection work
+// behind Render's proxy (otherwise every visitor shares one bucket).
+app.set('trust proxy', process.env.NODE_ENV === 'production' ? 1 : false);
+
 // ── Security / general rate limit ────────────────────────────
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 min

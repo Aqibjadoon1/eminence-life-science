@@ -36,7 +36,8 @@
   align-items: center;
   gap: 10px;
   text-decoration: none;
-  flex-shrink: 0;
+  flex-shrink: 1;
+  min-width: 0;
 }
 
 .wordmark {
@@ -461,6 +462,55 @@
   .primaryNav { display: none; }
   .hamburgerBtn { display: flex; }
   .headerInner { padding: 0 var(--space-4); }
+}
+
+@media (max-width: 640px) {
+  .headerInner {
+    padding: 0 12px;
+    gap: var(--space-2);
+  }
+
+  .hamburgerBtn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .iconActions {
+    gap: 2px;
+    margin-left: auto;
+  }
+
+  .iconBtn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .logo {
+    gap: 7px;
+  }
+
+  .wordmarkMain {
+    font-size: clamp(16px, 4.8vw, 21px);
+  }
+
+  .wordmarkSub {
+    font-size: 7px;
+  }
+}
+
+@media (max-width: 360px) {
+  .logo svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .logo {
+    gap: 5px;
+  }
+
+  .wordmarkMain {
+    font-size: 16px;
+  }
 }
 
 
