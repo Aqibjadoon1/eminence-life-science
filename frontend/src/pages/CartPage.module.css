@@ -75,10 +75,23 @@
 .removeBtn {
   font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
   color: var(--charcoal-muted); background: none; border: none; cursor: pointer;
-  border-bottom: 1px solid transparent; padding-bottom: 1px;
-  transition: color var(--duration-fast), border-color var(--duration-fast);
+  padding: 2px 4px;
+  position: relative; overflow: hidden; z-index: 0;
+  transition: color var(--duration-normal) var(--ease-out);
 }
-.removeBtn:hover { color: var(--charcoal); border-color: var(--charcoal); }
+
+/* Directional gold sweep */
+.removeBtn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--sweep-fill);
+  transform: translateX(-101%);
+  transition: transform var(--duration-normal) var(--ease-out);
+}
+.removeBtn:hover::before { transform: translateX(0); }
+.removeBtn:hover { color: var(--ivory); }
 
 .itemTotal {
   font-size: 14px; font-weight: 500; color: var(--charcoal);

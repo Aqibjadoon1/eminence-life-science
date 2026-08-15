@@ -11,6 +11,7 @@ import cartRoutes       from './routes/cart.js';
 import orderRoutes      from './routes/orders.js';
 import newsletterRoutes from './routes/newsletter.js';
 import addressRoutes    from './routes/addresses.js';
+import { getSitemap }   from './controllers/sitemap.js';
 
 dotenv.config();
 
@@ -51,6 +52,9 @@ app.use('/api/addresses',  addressRoutes);
 app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
+
+// ── Sitemap (DB-generated; proxied on the frontend origin) ─────
+app.get('/api/sitemap.xml', getSitemap);
 
 // ── Global error handler ─────────────────────────────────────
 app.use((err, _req, res, _next) => {

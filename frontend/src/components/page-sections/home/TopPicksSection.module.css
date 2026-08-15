@@ -90,12 +90,24 @@
   justify-content: center;
   color: var(--charcoal-muted);
   backdrop-filter: blur(4px);
-  transition: background var(--duration-fast) var(--ease-out),
-              color var(--duration-fast) var(--ease-out),
-              transform var(--duration-fast) var(--ease-out);
+  overflow: hidden;
   z-index: 2;
+  transition: color var(--duration-normal) var(--ease-out),
+              transform var(--duration-fast) var(--ease-out);
 }
-.wishBtn:hover { background: var(--white); color: var(--gold-500); }
+
+/* Directional gold sweep */
+.wishBtn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--sweep-fill);
+  transform: translateX(-101%);
+  transition: transform var(--duration-normal) var(--ease-out);
+}
+.wishBtn:hover::before { transform: translateX(0); }
+.wishBtn:hover { color: var(--ivory); }
 .wishActive { color: var(--gold-500) !important; }
 .wishActive svg { fill: var(--gold-500); }
 .wishBtn:active { transform: scale(0.9); }
@@ -126,10 +138,24 @@
   text-transform: uppercase;
   color: var(--charcoal);
   cursor: pointer;
-  transition: background var(--duration-fast) var(--ease-out),
-              color var(--duration-fast) var(--ease-out);
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+  transition: color var(--duration-normal) var(--ease-out);
 }
-.quickAdd:hover { background: var(--gold-gradient); }
+
+/* Directional gold sweep */
+.quickAdd::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--sweep-fill);
+  transform: translateX(-101%);
+  transition: transform var(--duration-normal) var(--ease-out);
+}
+.quickAdd:hover::before { transform: translateX(0); }
+.quickAdd:hover { color: var(--ivory); }
 
 /* Body */
 .body {

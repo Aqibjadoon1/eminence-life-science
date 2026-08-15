@@ -6,6 +6,7 @@ import useCartStore  from '../store/useCartStore.js';
 import useToastStore from '../store/useToastStore.js';
 import { formatPrice } from '../utils/formatting.js';
 import ProductCard from '../components/cards/ProductCard.jsx';
+import { canonicalUrl } from '../utils/seo.js';
 import styles from './ProductPage.module.css';
 
 export default function ProductPage() {
@@ -31,10 +32,17 @@ export default function ProductPage() {
 
   if (isLoading) return <ProductPageSkeleton />;
   if (error || !product) return (
-    <div className={styles.error}>
-      <p>Product not found.</p>
-      <Link to="/shop" className="btn btn-outline">Back to Shop</Link>
-    </div>
+    <>
+      {/* SPA soft-404 — keep out of the index */}
+      <Helmet>
+        <title>Product Not Found — Eminence Life Science</title>
+        <meta name="robots" content="noindex,follow" />
+      </Helmet>
+      <div className={styles.error}>
+        <p>Product not found.</p>
+        <Link to="/shop" className="btn btn-outline">Back to Shop</Link>
+      </div>
+    </>
   );
 
   const images = product.image_urls?.length ? product.image_urls : [
@@ -53,28 +61,8 @@ export default function ProductPage() {
       <Helmet>
         <title>{product.name} — Eminence Life Science</title>
         <meta name="description" content={product.description?.slice(0, 155)} />
+        <link rel="canonical" href={canonicalUrl(`/product/${slug}`)} />
       </Helmet>
-
-      {/* Breadcrumb */}
-      <nav className={`container ${styles.breadcrumb}`} aria-label="Breadcrumb">
-        <ol>
-          <li><Link to="/">Home</Link></li>
-          <li aria-hidden="true">·</li>
-          <li><Link to="/shop">Shop</Link></li>
-          {product.category_slug && (
-            <>
-              <li aria-hidden="true">·</li>
-              <li>
-                <Link to={`/shop/${product.category_slug}`}>
-                  {product.category_name}
-                </Link>
-              </li>
-            </>
-          )}
-          <li aria-hidden="true">·</li>
-          <li aria-current="page">{product.name}</li>
-        </ol>
-      </nav>
 
       {/* Main product layout */}
       <div className={`container ${styles.product}`}>

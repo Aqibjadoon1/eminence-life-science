@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet-async';
+import { canonicalUrl } from '../utils/seo.js';
 import HeroSection        from '../components/page-sections/home/HeroSection.jsx';
 import TrustStrip         from '../components/page-sections/home/TrustStrip.jsx';
 import TopPicksSection    from '../components/page-sections/home/TopPicksSection.jsx';
@@ -20,6 +21,7 @@ export default function HomePage() {
           name="description"
           content="Dermatologist-formulated serums, medicated bars, face washes, and emollients. Clean actives, clinical results. Made in Pakistan."
         />
+        <link rel="canonical" href={canonicalUrl('/')} />
       </Helmet>
 
       {/* 1. Hero slider */}

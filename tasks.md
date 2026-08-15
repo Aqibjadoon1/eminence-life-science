@@ -72,6 +72,43 @@ Full GlowWell-structure UI with Eminence gold/ivory brand skin.
 
 ---
 
+### Refactor D — Interaction Hover System
+- [x] **Button sweep (site-wide)**: directional gold fill (L→R, 250ms ease) on hover with text/icon inverting to ivory — global `.btn` system (primary/outline/ghost) + module buttons: navbar search submit, ProductCard add, Deal/TopPicks add + wishlist hearts, ShopPage filters/chips/clear/pagination, CategoryPage pagination, cart drawer remove/continue, CartPage remove, Wishlist clear, Contact locate, PromoBanner tile CTA, hero secondary CTA
+- [x] Removed the old `.btn::after` light shimmer (replaced by the fill sweep)
+- [x] New `--sweep-fill` token (deeper gold so the fill visibly travels over primary buttons too); disabled `.btn` gets opacity + pointer-events: none (no sweep on disabled)
+- [x] **Frosted-glass card hover**: ivory-tinted blur (8px) fades in over image-led cards — ConcernTiles, PromoBannerPair ("Enhance Your Beauty"), EditorialBanner — content elevated above the glass via text-shadow on hover; dark base gradients kept for rest-state legibility
+- [x] Left as-is (reported): tiny icon utilities (nav icons, hamburger, close buttons, qty steppers, hero arrows/dots) and tabs/form links keep their existing hover treatment; product-grid cards keep wishlist/badge behavior per spec
+- [x] Touch: hover-only states omitted on touch (matches existing site convention); `prefers-reduced-motion` zeroes transition durations globally
+
+---
+
+### SEO Phase 1 — Technical Foundation
+- [x] **render.yaml SPA fallback**: added `/* → /index.html` rewrite (after the `/api/*` proxy) so deep links (/shop, /product/:slug) return 200 instead of 404 — verified the deployed site was 404ing every non-root route
+- [x] **robots.txt** (frontend/public): Allow all public pages; disallow /cart, /checkout, /account, /wishlist, /order/, /admin, /api/; references the sitemap
+- [x] **DB-driven sitemap**: new backend GET /api/sitemap.xml (controllers/sitemap.js) — homepage, /shop, every category with ≥1 active product, every active product, /our-science, /contact; priorities 1.0→0.5, weekly/monthly changefreq; content-type application/xml; uses CLIENT_URL (Render) / localhost:5173 (dev); proxied to the frontend origin via the /api rewrite
+- [x] **Canonicals**: react-helmet-async `<link rel=canonical>` on all 12 pages via new utils/seo.js; shop canonicals strip filter/sort/search params → unfiltered /shop; category/product canonicals self-referencing (params stripped)
+- [x] **Soft-404 mitigation**: noindex,follow on NotFoundPage + the ProductPage/CategoryPage not-found branches (SPA returns 200 for unknown routes)
+- [x] **Favicon fix**: /logo.jpeg was 404ing (file lived in product-images/) — copied to frontend/public/logo.jpeg
+- [x] lang="en" + charset + viewport already correct in index.html (verified, no change needed)
+- [x] API already returns real 404s for missing products/categories (verified, no change needed)
+- Flagged: full 404 status for unknown SPA routes needs the backend to serve the build (architectural change) — deferred; /about-us doesn't exist (site uses /our-science)
+
+---
+
+### Interaction — Glass-Shatter Hover (promo/category cards)
+- [x] New reusable `ShatterImageCard` (components/specials/) — irregular triangular shard mesh (jittered grid + random diagonal, seeded mulberry32 PRNG so the pattern is stable across hovers), 12–48 shards scaled by container width, pixel-exact reassembly via cover-correct background slicing (natural dims loaded at runtime, object-position parsed), per-shard translate 5–20px / rotate ±8° / scale 0.97 / 0–120ms stagger via CSS custom props, icy glint (::after, mix-blend screen) + drop-shadow on a wrapper div (clip-path clips element filters), transform/opacity/filter only, 450ms ease
+- [x] Applied to PromoBannerPair, ConcernTiles (hover + focus trigger), EditorialBanner — driven by card-level `active` prop (controlled), so the whole card triggers the shatter, not just the image area
+- [x] Replaced the frosted-glass overlays on those cards (removed ::after glass + img zoom); permanent dark gradients stay at rest but fade to ~0.12 on hover so the shattered image reads through; hover text-shadow elevation kept
+- [x] prefers-reduced-motion: shards pinned at rest (no shatter), gradient fade remains as the motionless cue
+- [x] CORRECTED per user review: the photo is no longer sliced — it renders whole underneath; the shards are now a translucent glass pane ABOVE the photo that shatters on hover (removed the per-shard image background slicing, natural-dims loading, and object-position parsing — no longer needed)
+- [x] CORRECTED per user review #2: added a static "glass bed" layer (same mesh, held in place) that fades in on shatter beneath the moving shards — the gaps between scattered shards are now glass too, never bare photo
+- [x] REPLACED per user review #3 (shatter not premium): removed ShatterImageCard entirely (deleted files) and implemented a calm premium editorial hover — slow photo zoom (900–1100ms), gold hairline frame fading in, warm golden light-wash, gentle content lift, card shadow — on ConcernTiles/PromoBannerPair/EditorialBanner; agent-guiders spec updated
+- [x] Verified shard math offline: coverage ratio 1.0000 (no gaps), cover scale guarantees bg >= box, vertices in-bounds; production build 0 errors
+- [x] Contact form: stronger visible field borders (charcoal @30% → 50% hover → gold focus ring) in ContactPage.module.css
+- [x] agent-guiders/Promo-card-hover-spec.md created — active spec, explicitly supersedes the frosted-glass overlay
+
+---
+
 ## ⚪ Pending — Optional Next Steps
 
 ### Pricing confirmation required

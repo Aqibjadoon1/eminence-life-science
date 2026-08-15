@@ -149,10 +149,23 @@
   align-items: center;
   justify-content: center;
   color: var(--charcoal-muted);
-  transition: color var(--duration-fast) var(--ease-out);
+  overflow: hidden;
   z-index: 2;
+  transition: color var(--duration-normal) var(--ease-out);
 }
-.wishBtn:hover { color: var(--gold-500); }
+
+/* Directional gold sweep */
+.wishBtn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--sweep-fill);
+  transform: translateX(-101%);
+  transition: transform var(--duration-normal) var(--ease-out);
+}
+.wishBtn:hover::before { transform: translateX(0); }
+.wishBtn:hover { color: var(--ivory); }
 .wishActive { color: var(--gold-500) !important; }
 
 .body {
@@ -193,14 +206,27 @@
   color: var(--charcoal-muted);
   cursor: pointer;
   width: 100%;
-  transition: background var(--duration-fast) var(--ease-out),
-              border-color var(--duration-fast) var(--ease-out),
-              color var(--duration-fast) var(--ease-out);
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+  transition: color var(--duration-normal) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out);
 }
+
+/* Directional gold sweep */
+.addBtn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--sweep-fill);
+  transform: translateX(-101%);
+  transition: transform var(--duration-normal) var(--ease-out);
+}
+.addBtn:hover::before { transform: translateX(0); }
 .addBtn:hover {
-  background: var(--gold-gradient);
+  color: var(--ivory);
   border-color: transparent;
-  color: var(--charcoal);
 }
 
 /* Skeleton */

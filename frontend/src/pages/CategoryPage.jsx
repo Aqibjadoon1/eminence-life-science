@@ -11,6 +11,7 @@ import { useEffect } from 'react';
 import ProductCard from '../components/cards/ProductCard.jsx';
 import { useIntersectionObserver } from '../utils/useIntersectionObserver.js';
 import { SORT_OPTIONS } from '../config.js';
+import { canonicalUrl } from '../utils/seo.js';
 import styles from './CategoryPage.module.css';
 
 export default function CategoryPage() {
@@ -41,10 +42,17 @@ export default function CategoryPage() {
 
   if (error) {
     return (
-      <div className={`container ${styles.error}`}>
-        <p>Category not found.</p>
-        <Link to="/shop" className="btn btn-outline">Back to Shop</Link>
-      </div>
+      <>
+        {/* SPA soft-404 — keep out of the index */}
+        <Helmet>
+          <title>Category Not Found — Eminence Life Science</title>
+          <meta name="robots" content="noindex,follow" />
+        </Helmet>
+        <div className={`container ${styles.error}`}>
+          <p>Category not found.</p>
+          <Link to="/shop" className="btn btn-outline">Back to Shop</Link>
+        </div>
+      </>
     );
   }
 
@@ -53,6 +61,8 @@ export default function CategoryPage() {
       <Helmet>
         <title>{category?.name ? `${category.name} — ` : ''}Eminence Life Science</title>
         <meta name="description" content={category?.description || ''} />
+        {/* Self-referencing canonical, sort/page params stripped */}
+        <link rel="canonical" href={canonicalUrl(`/shop/${categorySlug}`)} />
       </Helmet>
 
       {/* Hero banner */}

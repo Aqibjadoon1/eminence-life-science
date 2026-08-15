@@ -31,13 +31,27 @@
   padding: 8px 16px;
   cursor: pointer;
   margin-top: var(--space-5);
-  transition: border-color var(--duration-fast) var(--ease-out),
-              color var(--duration-fast) var(--ease-out);
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+  transition: color var(--duration-normal) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out);
 }
 
+/* Directional gold sweep */
+.clearBtn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--sweep-fill);
+  transform: translateX(-101%);
+  transition: transform var(--duration-normal) var(--ease-out);
+}
+.clearBtn:hover::before { transform: translateX(0); }
 .clearBtn:hover {
-  border-color: var(--gold-500);
-  color: var(--gold-500);
+  color: var(--ivory);
+  border-color: transparent;
 }
 
 .grid {

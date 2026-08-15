@@ -1,0 +1,17 @@
+# Eminence Life Science — robots.txt
+# Public pages are fully crawlable. Private/user-specific and internal routes
+# are blocked from indexing.
+
+User-agent: *
+Allow: /
+Disallow: /cart
+Disallow: /checkout
+Disallow: /account
+Disallow: /wishlist
+Disallow: /order/
+Disallow: /admin
+Disallow: /api/
+
+# Sitemap is generated from the database by the backend and proxied here.
+# NOTE: update this URL if a custom domain is added (render.yaml has one commented out).
+Sitemap: https://eminence-frontend.onrender.com/api/sitemap.xml

@@ -7,6 +7,7 @@ import useToastStore from '../store/useToastStore.js';
 import { OrderService } from '../services/OrderService.js';
 import { formatPrice } from '../utils/formatting.js';
 import { PAYMENT_METHODS, SHIPPING_FEE } from '../config.js';
+import { canonicalUrl } from '../utils/seo.js';
 import styles from './CheckoutPage.module.css';
 
 const STEPS = ['Address', 'Payment', 'Review'];
@@ -91,6 +92,7 @@ export default function CheckoutPage() {
     <>
       <Helmet>
         <title>Checkout — Eminence Life Science</title>
+        <link rel="canonical" href={canonicalUrl('/checkout')} />
       </Helmet>
 
       <div className={`container ${styles.page}`}>

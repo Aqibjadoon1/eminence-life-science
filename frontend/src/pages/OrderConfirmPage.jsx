@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { OrderService } from '../services/OrderService.js';
 import { formatPrice, formatDate } from '../utils/formatting.js';
+import { canonicalUrl } from '../utils/seo.js';
 import styles from './OrderConfirmPage.module.css';
 
 export default function OrderConfirmPage() {
@@ -28,7 +29,10 @@ export default function OrderConfirmPage() {
 
   return (
     <>
-      <Helmet><title>Order Confirmed — Eminence Life Science</title></Helmet>
+      <Helmet>
+        <title>Order Confirmed — Eminence Life Science</title>
+        <link rel="canonical" href={canonicalUrl(`/order/${id}`)} />
+      </Helmet>
       <div className={`container ${styles.page}`}>
         <div className={styles.iconWrap} aria-hidden="true">
           <CheckIcon />

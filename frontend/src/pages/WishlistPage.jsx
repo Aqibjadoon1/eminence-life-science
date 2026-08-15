@@ -2,6 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import useWishlistStore from '../store/useWishlistStore.js';
 import ProductCard from '../components/cards/ProductCard.jsx';
+import { canonicalUrl } from '../utils/seo.js';
 import styles from './WishlistPage.module.css';
 
 export default function WishlistPage() {
@@ -11,6 +12,7 @@ export default function WishlistPage() {
     <>
       <Helmet>
         <title>Wishlist — Eminence Life Science</title>
+        <link rel="canonical" href={canonicalUrl('/wishlist')} />
       </Helmet>
 
       <div className={`container ${styles.page}`}>

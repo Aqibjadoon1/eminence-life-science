@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useIntersectionObserver } from '../utils/useIntersectionObserver.js';
+import { canonicalUrl } from '../utils/seo.js';
 import styles from './ContactPage.module.css';
 
 const CONTACT_INFO = [
@@ -21,12 +22,43 @@ const CONTACT_INFO = [
   },
 ];
 
+const STORE_LOCATION = 'Lahore,+Pakistan';
+
 export default function ContactPage() {
   const [fields, setFields] = useState({ name: '', email: '', subject: '', message: '' });
   const [status, setStatus] = useState('idle'); // idle | loading | success | error
+  // Map location state: null = store location, otherwise { lat, lng }
+  const [mapCenter, setMapCenter] = useState(null);
+  // idle | locating | active | denied | error
+  const [locState, setLocState] = useState('idle');
   const { ref, isVisible }  = useIntersectionObserver();
 
   const set = (k) => (e) => setFields((f) => ({ ...f, [k]: e.target.value }));
+
+  const locateMe = () => {
+    if (!('geolocation' in navigator)) {
+      setLocState('error');
+      return;
+    }
+    setLocState('locating');
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        setMapCenter({ lat: pos.coords.latitude, lng: pos.coords.longitude });
+        setLocState('active');
+      },
+      () => setLocState('denied'),
+      { enableHighAccuracy: true, timeout: 8000 }
+    );
+  };
+
+  const resetMap = () => {
+    setMapCenter(null);
+    setLocState('idle');
+  };
+
+  const mapSrc = mapCenter
+    ? `https://www.google.com/maps?q=${mapCenter.lat},${mapCenter.lng}&z=14&output=embed`
+    : `https://www.google.com/maps?q=${STORE_LOCATION}&z=12&output=embed`;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -41,6 +73,7 @@ export default function ContactPage() {
       <Helmet>
         <title>Contact — Eminence Life Science</title>
         <meta name="description" content="Get in touch with Eminence Life Science. Questions about your order, skincare advice, or wholesale enquiries." />
+        <link rel="canonical" href={canonicalUrl('/contact')} />
       </Helmet>
 
       {/* Page header */}
@@ -164,6 +197,48 @@ export default function ContactPage() {
             </form>
           )}
         </main>
+
+        {/* Location map */}
+        <div className={styles.mapWrap}>
+          <div className={styles.mapBar}>
+            <span className={styles.mapStatus}>
+              {mapCenter
+                ? 'Showing your current location'
+                : 'Our location — Lahore, Pakistan'}
+            </span>
+            {mapCenter ? (
+              <button type="button" className={styles.locateBtn} onClick={resetMap}>
+                Show store location
+              </button>
+            ) : (
+              <button
+                type="button"
+                className={styles.locateBtn}
+                onClick={locateMe}
+                disabled={locState === 'locating'}
+              >
+                {locState === 'locating' ? 'Locating…' : 'Use my current location'}
+              </button>
+            )}
+          </div>
+
+          {(locState === 'denied' || locState === 'error') && (
+            <p className={styles.mapNote}>
+              {locState === 'denied'
+                ? 'Location access was denied — showing our store location instead.'
+                : 'Your browser does not support location services — showing our store location instead.'}
+            </p>
+          )}
+
+          <iframe
+            className={styles.map}
+            src={mapSrc}
+            title="Eminence Life Science location map"
+            loading="lazy"
+            allowFullScreen
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+        </div>
       </div>
     </>
   );

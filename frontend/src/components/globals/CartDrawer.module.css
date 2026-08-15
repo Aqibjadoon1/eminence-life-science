@@ -180,11 +180,25 @@
   background: none;
   border: none;
   cursor: pointer;
-  border-bottom: 1px solid transparent;
-  padding-bottom: 1px;
-  transition: color var(--duration-fast) var(--ease-out), border-color var(--duration-fast) var(--ease-out);
+  padding: 2px 4px;
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+  transition: color var(--duration-normal) var(--ease-out);
 }
-.removeBtn:hover { color: var(--charcoal); border-color: var(--charcoal); }
+
+/* Directional gold sweep */
+.removeBtn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--sweep-fill);
+  transform: translateX(-101%);
+  transition: transform var(--duration-normal) var(--ease-out);
+}
+.removeBtn:hover::before { transform: translateX(0); }
+.removeBtn:hover { color: var(--ivory); }
 
 .itemLineTotal {
   font-size: 12px;
@@ -326,9 +340,24 @@
   cursor: pointer;
   text-align: center;
   padding: var(--space-2);
-  transition: color var(--duration-fast) var(--ease-out);
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+  transition: color var(--duration-normal) var(--ease-out);
 }
-.continueBtn:hover { color: var(--gold-500); }
+
+/* Directional gold sweep */
+.continueBtn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--sweep-fill);
+  transform: translateX(-101%);
+  transition: transform var(--duration-normal) var(--ease-out);
+}
+.continueBtn:hover::before { transform: translateX(0); }
+.continueBtn:hover { color: var(--ivory); }
 
 /* Empty state */
 .empty {

@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import useCartStore from '../store/useCartStore.js';
 import { formatPrice } from '../utils/formatting.js';
 import { SHIPPING_FEE } from '../config.js';
+import { canonicalUrl } from '../utils/seo.js';
 import styles from './CartPage.module.css';
 
 export default function CartPage() {
@@ -16,6 +17,7 @@ export default function CartPage() {
     <>
       <Helmet>
         <title>Your Cart — Eminence Life Science</title>
+        <link rel="canonical" href={canonicalUrl('/cart')} />
       </Helmet>
 
       <div className={`container ${styles.page}`}>

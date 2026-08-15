@@ -6,6 +6,7 @@ import { useDebounce } from '../hooks/useDebounce.js';
 import { useCategories, useCategoryAttributes } from '../hooks/useCategories.js';
 import ProductCard from '../components/cards/ProductCard.jsx';
 import { SORT_OPTIONS } from '../config.js';
+import { canonicalUrl } from '../utils/seo.js';
 import styles from './ShopPage.module.css';
 
 // Attribute keys we render as human-readable filter labels
@@ -101,6 +102,8 @@ export default function ShopPage() {
             'Browse our full collection of premium skincare — serums, soaps, face washes, emollients, and sunblock.'
           }
         />
+        {/* Canonical to the unfiltered shop — filter/sort/search params are stripped */}
+        <link rel="canonical" href={canonicalUrl('/shop')} />
       </Helmet>
 
       {/* Page header */}

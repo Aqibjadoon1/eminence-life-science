@@ -51,9 +51,16 @@ services:
       - key: VITE_API_URL
         value: /api
     routes:
+      # Proxy API calls to the backend service (order matters — must come first)
       - type: rewrite
         source: /api/*
         destination: https://eminence-api.onrender.com/api/*
+      # SPA fallback — serve index.html for all client-side routes so deep links
+      # (/shop, /product/:slug, …) return 200 instead of 404. Render skips rules
+      # when a real file exists at the path, so static assets are unaffected.
+      - type: rewrite
+        source: /*
+        destination: /index.html
 
   # ── Custom domain (optional — uncomment and add your domain) ──
   # domains:

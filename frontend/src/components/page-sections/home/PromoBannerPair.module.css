@@ -20,6 +20,9 @@
 }
 .tile.visible { opacity: 1; transform: none; }
 
+/* ── Premium hover ────────────────────────────────────────────────
+   Slow image zoom + gold hairline frame + warm golden light-wash;
+   content lifts gently. All transform/opacity (GPU-friendly). */
 .tileBg {
   position: absolute;
   inset: 0;
@@ -29,9 +32,49 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 600ms var(--ease-out);
+  transition: transform 900ms var(--ease-out);
 }
-.tile:hover .tileBg img { transform: scale(1.04); }
+
+.tile:hover .tileBg img {
+  transform: scale(1.05);
+}
+
+/* Warm golden light-wash over the photo */
+.tileBg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    160deg,
+    rgba(232, 206, 142, 0.22) 0%,
+    rgba(232, 206, 142, 0.06) 55%,
+    transparent 75%
+  );
+  opacity: 0;
+  transition: opacity var(--duration-slow) var(--ease-out);
+  pointer-events: none;
+}
+
+.tile:hover .tileBg::after {
+  opacity: 1;
+}
+
+/* Gold hairline frame */
+.tile::before {
+  content: '';
+  position: absolute;
+  inset: 12px;
+  z-index: 3;
+  border: 1px solid rgba(232, 206, 142, 0.9);
+  opacity: 0;
+  transition: opacity var(--duration-slow) var(--ease-out);
+  pointer-events: none;
+}
+
+.tile:hover::before {
+  opacity: 1;
+}
 
 .tileOverlay {
   position: absolute;
@@ -46,13 +89,18 @@
 
 .tileContent {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   padding: var(--space-8);
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   gap: var(--space-3);
+  transition: transform var(--duration-slow) var(--ease-out);
+}
+
+.tile:hover .tileContent {
+  transform: translateY(-6px);
 }
 
 .tileEyebrow {
@@ -87,15 +135,27 @@
   text-transform: uppercase;
   border-radius: var(--radius-sm);
   backdrop-filter: blur(4px);
-  transition: background var(--duration-fast) var(--ease-out),
-              border-color var(--duration-fast) var(--ease-out),
-              color var(--duration-fast) var(--ease-out);
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+  transition: color var(--duration-normal) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out);
 }
 
+/* Directional gold sweep */
+.tileCta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--sweep-fill);
+  transform: translateX(-101%);
+  transition: transform var(--duration-normal) var(--ease-out);
+}
+.tileCta:hover::before { transform: translateX(0); }
 .tileCta:hover {
-  background: var(--gold-gradient);
+  color: var(--ivory);
   border-color: transparent;
-  color: var(--charcoal);
 }
 
 @media (max-width: 768px) {

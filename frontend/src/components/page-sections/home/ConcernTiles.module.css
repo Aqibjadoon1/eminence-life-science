@@ -56,7 +56,9 @@
   box-shadow: var(--shadow-4);
 }
 
-/* Background image */
+/* ── Premium hover ────────────────────────────────────────────────
+   Slow image zoom + gold hairline frame + warm golden light-wash;
+   content lifts gently. All transform/opacity (GPU-friendly). */
 .tileImg {
   position: absolute;
   inset: 0;
@@ -66,11 +68,48 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 600ms var(--ease-out);
+  transition: transform 900ms var(--ease-out);
 }
 
 .tile:hover .tileImg img {
   transform: scale(1.06);
+}
+
+/* Warm golden light-wash over the photo */
+.tileImg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    160deg,
+    rgba(232, 206, 142, 0.22) 0%,
+    rgba(232, 206, 142, 0.06) 55%,
+    transparent 75%
+  );
+  opacity: 0;
+  transition: opacity var(--duration-slow) var(--ease-out);
+  pointer-events: none;
+}
+
+.tile:hover .tileImg::after {
+  opacity: 1;
+}
+
+/* Gold hairline frame */
+.tile::before {
+  content: '';
+  position: absolute;
+  inset: 12px;
+  z-index: 3;
+  border: 1px solid rgba(232, 206, 142, 0.9);
+  opacity: 0;
+  transition: opacity var(--duration-slow) var(--ease-out);
+  pointer-events: none;
+}
+
+.tile:hover::before {
+  opacity: 1;
 }
 
 .tileOverlay {
@@ -82,26 +121,21 @@
     rgba(32,32,29,0.30) 50%,
     rgba(32,32,29,0.05) 100%
   );
-  transition: background var(--duration-normal) var(--ease-out);
 }
 
-.tile:hover .tileOverlay {
-  background: linear-gradient(
-    to top,
-    rgba(32,32,29,0.88) 0%,
-    rgba(32,32,29,0.40) 55%,
-    rgba(32,32,29,0.10) 100%
-  );
-}
-
-/* Tile content */
+/* Tile content — lifts gently on hover */
 .tileContent {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   padding: var(--space-7);
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
+  transition: transform var(--duration-slow) var(--ease-out);
+}
+
+.tile:hover .tileContent {
+  transform: translateY(-6px);
 }
 
 .tileEyebrow {

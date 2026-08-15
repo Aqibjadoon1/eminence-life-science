@@ -7,6 +7,8 @@ export default function NotFoundPage() {
     <>
       <Helmet>
         <title>Page Not Found — Eminence Life Science</title>
+        {/* The SPA returns 200 for unknown routes (soft 404); keep them out of the index */}
+        <meta name="robots" content="noindex,follow" />
       </Helmet>
 
       <div className={`container ${styles.page}`}>

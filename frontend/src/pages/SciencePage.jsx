@@ -1,6 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { useIntersectionObserver } from '../utils/useIntersectionObserver.js';
+import { canonicalUrl } from '../utils/seo.js';
 import styles from './SciencePage.module.css';
 
 const PILLARS = [
@@ -43,6 +44,7 @@ export default function SciencePage() {
       <Helmet>
         <title>Our Science — Eminence Life Science</title>
         <meta name="description" content="The philosophy and methodology behind Eminence Life Science formulations. Clinical concentrations, pharmaceutical-grade sourcing, stability-tested actives." />
+        <link rel="canonical" href={canonicalUrl('/our-science')} />
       </Helmet>
 
       {/* Hero */}

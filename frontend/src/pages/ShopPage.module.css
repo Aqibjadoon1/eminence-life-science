@@ -75,13 +75,25 @@
   background: transparent;
   border: none;
   cursor: pointer;
-  transition: background var(--duration-fast) var(--ease-out),
-              color var(--duration-fast) var(--ease-out);
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+  transition: color var(--duration-normal) var(--ease-out);
 }
 
+/* Directional gold sweep */
+.filterBtn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--sweep-fill);
+  transform: translateX(-101%);
+  transition: transform var(--duration-normal) var(--ease-out);
+}
+.filterBtn:hover::before { transform: translateX(0); }
 .filterBtn:hover {
-  background: var(--ivory);
-  color: var(--charcoal);
+  color: var(--ivory);
 }
 
 .filterBtn.active {
@@ -116,13 +128,27 @@
   text-transform: uppercase;
   color: var(--charcoal-muted);
   cursor: pointer;
-  transition: border-color var(--duration-fast) var(--ease-out),
-              color var(--duration-fast) var(--ease-out);
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+  transition: color var(--duration-normal) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out);
 }
 
+/* Directional gold sweep */
+.clearBtn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--sweep-fill);
+  transform: translateX(-101%);
+  transition: transform var(--duration-normal) var(--ease-out);
+}
+.clearBtn:hover::before { transform: translateX(0); }
 .clearBtn:hover {
-  border-color: var(--gold-500);
-  color: var(--gold-500);
+  color: var(--ivory);
+  border-color: transparent;
 }
 
 /* ── Main ─────────────────────────────────────────────────────────────── */
@@ -237,11 +263,27 @@
   letter-spacing: 0.06em;
   color: var(--gold-700);
   cursor: pointer;
-  transition: background var(--duration-fast) var(--ease-out);
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+  transition: color var(--duration-normal) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out);
 }
 
+/* Directional gold sweep */
+.filterChip::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--sweep-fill);
+  transform: translateX(-101%);
+  transition: transform var(--duration-normal) var(--ease-out);
+}
+.filterChip:hover::before { transform: translateX(0); }
 .filterChip:hover {
-  background: rgba(201, 162, 75, 0.18);
+  color: var(--ivory);
+  border-color: transparent;
 }
 
 /* Product grid */
@@ -292,10 +334,25 @@
   font-size: 13px;
   color: var(--charcoal-muted);
   cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-out);
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+  transition: color var(--duration-normal) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out);
 }
 
-.pageBtn:hover { border-color: var(--gold-500); color: var(--gold-500); }
+/* Directional gold sweep */
+.pageBtn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--sweep-fill);
+  transform: translateX(-101%);
+  transition: transform var(--duration-normal) var(--ease-out);
+}
+.pageBtn:hover::before { transform: translateX(0); }
+.pageBtn:hover { color: var(--ivory); border-color: transparent; }
 .pageBtnActive {
   background: var(--gold-gradient);
   color: var(--charcoal);

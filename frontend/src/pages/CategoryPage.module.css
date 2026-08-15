@@ -170,10 +170,25 @@
   font-size: 13px;
   color: var(--charcoal-muted);
   cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-out);
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+  transition: color var(--duration-normal) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out);
 }
 
-.pageBtn:hover { border-color: var(--gold-500); color: var(--gold-500); }
+/* Directional gold sweep */
+.pageBtn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--sweep-fill);
+  transform: translateX(-101%);
+  transition: transform var(--duration-normal) var(--ease-out);
+}
+.pageBtn:hover::before { transform: translateX(0); }
+.pageBtn:hover { color: var(--ivory); border-color: transparent; }
 .pageBtnActive {
   background: var(--gold-gradient);
   color: var(--charcoal);

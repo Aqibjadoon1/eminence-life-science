@@ -133,10 +133,9 @@
   border: 1px solid rgba(231, 224, 210, 0.5);
 }
 
+/* Sweep + ivory text come from the global .btn rules; just warm the border here */
 .ctaSecondary:hover {
   border-color: var(--gold-300);
-  color: var(--gold-300);
-  background: transparent;
 }
 
 /* ── Arrows ─────────────────────────────────────────────────────── */

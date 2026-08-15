@@ -207,16 +207,22 @@
 
 @media (max-width: 480px) {
   .modal {
-    padding: var(--space-6) var(--space-5);
-    width: calc(100vw - var(--space-6));
+    padding: var(--space-6) var(--space-5) calc(var(--space-6) + env(safe-area-inset-bottom));
     top: auto;
     bottom: 0;
-    left: 0;
-    right: 0;
+    left: var(--space-3);
+    right: var(--space-3);
+    width: auto;
     transform: none;
     border-radius: var(--radius-lg) var(--radius-lg) 0 0;
     max-height: 90svh;
     animation: modalInMobile 250ms var(--ease-out);
+  }
+
+  /* 16px inputs prevent iOS Safari's viewport auto-zoom on focus */
+  .input {
+    font-size: 16px;
+    min-height: 48px;
   }
 
   @keyframes modalInMobile {

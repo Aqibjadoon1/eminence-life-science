@@ -6,6 +6,7 @@ import useCartStore  from '../store/useCartStore.js';
 import useToastStore from '../store/useToastStore.js';
 import { OrderService } from '../services/OrderService.js';
 import { formatPrice, formatDate } from '../utils/formatting.js';
+import { canonicalUrl } from '../utils/seo.js';
 import styles from './AccountPage.module.css';
 
 export default function AccountPage() {
@@ -56,7 +57,10 @@ function AuthForms({ defaultMode, nextPath }) {
 
   return (
     <>
-      <Helmet><title>{mode === 'login' ? 'Sign In' : 'Create Account'} — Eminence Life Science</title></Helmet>
+      <Helmet>
+        <title>{mode === 'login' ? 'Sign In' : 'Create Account'} — Eminence Life Science</title>
+        <link rel="canonical" href={canonicalUrl('/account')} />
+      </Helmet>
 
       <div className={`container ${styles.authPage}`}>
         <div className={styles.authCard}>
@@ -193,7 +197,10 @@ function Dashboard() {
 
   return (
     <>
-      <Helmet><title>My Account — Eminence Life Science</title></Helmet>
+      <Helmet>
+        <title>My Account — Eminence Life Science</title>
+        <link rel="canonical" href={canonicalUrl('/account')} />
+      </Helmet>
 
       <div className={`container ${styles.dashboard}`}>
         <div className={styles.dashHeader}>

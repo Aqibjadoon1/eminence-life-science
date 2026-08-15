@@ -256,9 +256,24 @@
   letter-spacing: 0.1em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: opacity var(--duration-fast) var(--ease-out);
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+  transition: color var(--duration-normal) var(--ease-out);
 }
-.searchSubmitBtn:hover { opacity: 0.88; }
+
+/* Directional gold sweep */
+.searchSubmitBtn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--sweep-fill);
+  transform: translateX(-101%);
+  transition: transform var(--duration-normal) var(--ease-out);
+}
+.searchSubmitBtn:hover::before { transform: translateX(0); }
+.searchSubmitBtn:hover { color: var(--ivory); }
 
 .searchCloseBtn {
   display: flex;
