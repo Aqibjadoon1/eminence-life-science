@@ -16,7 +16,7 @@ const SLIDES = [
     body: 'Clinical-grade actives in every drop. Your skin\'s most demanding ritual, distilled to its essence.',
     cta: { label: 'Shop Serums', href: '/shop/brightening' },
     ctaSecondary: { label: 'Our Science', href: '/our-science' },
-    image: 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=1600&q=85',
+    image: '/images/hero1.png',
     imagePosition: 'center 30%',
   },
   {
