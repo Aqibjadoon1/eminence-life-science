@@ -1,0 +1,276 @@
+/* ═══════════════════════════════════════════════════════════════════
+   HERO SLIDER — GlowWell structure · Eminence brand skin
+   ═══════════════════════════════════════════════════════════════════ */
+
+.hero {
+  position: relative;
+  height: 100svh;
+  min-height: 600px;
+  max-height: 920px;
+  overflow: hidden;
+  background: var(--charcoal);
+}
+
+/* ── Slides ─────────────────────────────────────────────────────── */
+.slide {
+  position: absolute;
+  inset: 0;
+  transition: opacity 700ms var(--ease-out);
+}
+
+.slideActive   { opacity: 1; z-index: 1; }
+.slideInactive { opacity: 0; z-index: 0; }
+
+.slideBg {
+  position: absolute;
+  inset: 0;
+}
+
+.slideBg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.slideOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    125deg,
+    rgba(32, 32, 29, 0.72) 0%,
+    rgba(32, 32, 29, 0.40) 55%,
+    rgba(32, 32, 29, 0.15) 100%
+  );
+}
+
+/* ── Content ────────────────────────────────────────────────────── */
+.content {
+  position: relative;
+  z-index: 10;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: var(--space-5);
+  padding-top: var(--space-9);
+  padding-bottom: var(--space-9);
+  max-width: 680px;
+  animation: slideContentIn 600ms var(--ease-out) both;
+}
+
+@keyframes slideContentIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.logoWrap {
+  animation: logoFadeIn 500ms 50ms var(--ease-out) both;
+}
+
+@keyframes logoFadeIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.eyebrow {
+  color: var(--gold-300) !important;
+  animation: slideContentIn 600ms 100ms var(--ease-out) both;
+}
+
+.headline {
+  font-family: var(--font-serif);
+  font-size: clamp(44px, 6.5vw, 88px);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--ivory);
+  animation: slideContentIn 600ms 200ms var(--ease-out) both;
+}
+
+.headline em {
+  font-style: italic;
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.body {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: rgba(252, 250, 245, 0.8);
+  max-width: 420px;
+  animation: slideContentIn 600ms 300ms var(--ease-out) both;
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  animation: slideContentIn 600ms 400ms var(--ease-out) both;
+}
+
+/* Override btn styles for dark hero */
+.ctaPrimary {
+  background: var(--gold-gradient);
+  color: var(--charcoal);
+  border-color: transparent;
+}
+
+.ctaSecondary {
+  background: transparent;
+  color: var(--ivory);
+  border: 1px solid rgba(231, 224, 210, 0.5);
+}
+
+.ctaSecondary:hover {
+  border-color: var(--gold-300);
+  color: var(--gold-300);
+  background: transparent;
+}
+
+/* ── Arrows ─────────────────────────────────────────────────────── */
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(252, 250, 245, 0.12);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(252, 250, 245, 0.2);
+  border-radius: 50%;
+  color: var(--ivory);
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out);
+}
+
+.arrow:hover {
+  background: rgba(201, 162, 75, 0.25);
+  border-color: var(--gold-300);
+  color: var(--gold-300);
+}
+
+.arrowPrev { left: var(--space-6); }
+.arrowNext { right: var(--space-6); }
+
+/* ── Dots ────────────────────────────────────────────────────────── */
+.dots {
+  position: absolute;
+  bottom: var(--space-7);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  gap: var(--space-2);
+}
+
+.dot {
+  width: 28px;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(252, 250, 245, 0.35);
+  border: none;
+  cursor: pointer;
+  transition: background var(--duration-normal) var(--ease-out),
+              width var(--duration-normal) var(--ease-out);
+  padding: 0;
+}
+
+.dotActive {
+  background: var(--gold-gradient);
+  width: 40px;
+}
+
+/* ── Scroll hint ─────────────────────────────────────────────────── */
+.scrollHint {
+  position: absolute;
+  bottom: var(--space-7);
+  right: var(--space-8);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  opacity: 0.6;
+}
+
+.scrollLine {
+  display: block;
+  width: 1px;
+  height: 44px;
+  background: linear-gradient(to bottom, var(--gold-300), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+.scrollLabel {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ivory);
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.5; }
+  50%       { opacity: 1; }
+}
+
+/* ── Responsive ─────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .hero {
+    max-height: 700px;
+  }
+
+  .content {
+    align-items: center;
+    text-align: center;
+    max-width: 100%;
+  }
+
+  .body {
+    max-width: 100%;
+  }
+
+  .actions {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .actions .btn {
+    flex: 1;
+    min-width: 130px;
+  }
+
+  /* Hide the prev/next arrow buttons on mobile — dots remain for navigation */
+  .arrow { display: none; }
+
+  .scrollHint { display: none; }
+}
+
+/* Reduced motion — disable all slide/content transitions */
+@media (prefers-reduced-motion: reduce) {
+  .slide        { transition: none; }
+  .content,
+  .logoWrap,
+  .eyebrow,
+  .headline,
+  .body,
+  .actions      { animation: none; }
+  .scrollLine   { animation: none; }
+}

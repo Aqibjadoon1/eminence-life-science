@@ -1,0 +1,94 @@
+/* Entrance animations for each logo element */
+
+/* Left leaf — fade + slide in from left */
+.leafLeft {
+  opacity: 0;
+  transform-origin: center bottom;
+  animation: leafEnterLeft 600ms 100ms var(--ease-out) forwards;
+}
+
+/* Right leaf — fade + slide in from right */
+.leafRight {
+  opacity: 0;
+  transform-origin: center bottom;
+  animation: leafEnterRight 600ms 200ms var(--ease-out) forwards;
+}
+
+/* Centre leaf — fade + scale up from bottom */
+.leafCenter {
+  opacity: 0;
+  transform-origin: center bottom;
+  animation: leafEnterCenter 700ms 50ms var(--ease-out) forwards;
+}
+
+/* Sparkle — scale up from zero then pulse once */
+.sparkle {
+  opacity: 0;
+  transform-origin: center center;
+  animation:
+    sparkleEnter  400ms 750ms var(--ease-out)  forwards,
+    sparklePulse  600ms 1150ms ease-in-out      1;
+}
+
+@keyframes leafEnterLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-8px) rotate(-6deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) rotate(0deg);
+  }
+}
+
+@keyframes leafEnterRight {
+  from {
+    opacity: 0;
+    transform: translateX(8px) rotate(6deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) rotate(0deg);
+  }
+}
+
+@keyframes leafEnterCenter {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes sparkleEnter {
+  from {
+    opacity: 0;
+    transform: scale(0.2) rotate(-30deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@keyframes sparklePulse {
+  0%   { transform: scale(1);    opacity: 1; }
+  40%  { transform: scale(1.5);  opacity: 0.9; }
+  70%  { transform: scale(0.85); opacity: 1; }
+  100% { transform: scale(1);    opacity: 1; }
+}
+
+/* Reduced-motion: skip to final state immediately */
+@media (prefers-reduced-motion: reduce) {
+  .leafLeft,
+  .leafRight,
+  .leafCenter,
+  .sparkle {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

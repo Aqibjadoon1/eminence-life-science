@@ -1,0 +1,123 @@
+.page {
+  padding-top: var(--space-11);
+  padding-bottom: var(--space-12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-5);
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  padding: var(--space-12);
+}
+
+.error {
+  text-align: center;
+  padding: var(--space-12) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+.iconWrap {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 1px solid var(--hairline);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold-500);
+  animation: fadeUp 400ms var(--ease-out) both;
+}
+
+.title {
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 400;
+  color: var(--charcoal);
+}
+
+.sub {
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--charcoal-muted);
+  line-height: 1.7;
+  max-width: 480px;
+}
+
+.card {
+  width: 100%;
+  background: var(--white);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  text-align: left;
+  margin-top: var(--space-3);
+}
+
+.cardTitle {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: var(--space-5);
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.item:last-of-type {
+  border-bottom: none;
+}
+
+.itemImg {
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+  background: var(--ivory);
+  flex-shrink: 0;
+}
+
+.itemName {
+  flex: 1;
+  font-size: 14px;
+  color: var(--charcoal);
+  line-height: 1.4;
+}
+
+.itemMeta {
+  font-size: 13px;
+  color: var(--charcoal-muted);
+}
+
+.itemPrice {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--charcoal);
+  white-space: nowrap;
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  color: var(--charcoal);
+  padding-top: var(--space-2);
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: var(--space-4);
+}

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Desktop harness</title>
+<style>
+  body { margin: 0; background: #111; }
+  .stage { width: 338px; height: 618px; overflow: hidden; position: relative; }
+  .stage iframe {
+    width: 1440px;
+    height: 900px;
+    border: 0;
+    transform: scale(0.2347);
+    transform-origin: 0 0;
+  }
+  .cap { color: #bbb; font: 11px monospace; padding: 4px 8px; }
+</style>
+</head>
+<body>
+<div class="cap">iframe: 1440x900, scaled to fit — short page footer</div>
+<div class="stage">
+  <iframe src="http://localhost:5173/order/nonexistent" title="site"></iframe>
+</div>
+</body>
+</html>

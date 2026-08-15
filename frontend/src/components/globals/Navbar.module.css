@@ -1,0 +1,466 @@
+/* ═══════════════════════════════════════════════════════════════════
+   NAVBAR — GlowWell structure · Eminence gold/ivory brand skin
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── 1. Header row ───────────────────────────────────────────────── */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 500;
+  background: var(--ivory);
+  border-bottom: 1px solid var(--hairline);
+  transition: background 250ms var(--ease-out),
+              box-shadow 250ms var(--ease-out);
+}
+
+.header.scrolled {
+  background: rgba(252, 250, 245, 0.95);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 1px 0 var(--hairline);
+}
+
+.headerInner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+  height: 72px;
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.wordmark {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.wordmarkMain {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 500;
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.01em;
+}
+
+.wordmarkSub {
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--charcoal-muted);
+  margin-top: 2px;
+}
+
+/* Primary nav */
+.primaryNav {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.primaryNav ul {
+  display: flex;
+  align-items: center;
+  gap: var(--space-7);
+  list-style: none;
+}
+
+.primaryNav a,
+.navBtn {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--charcoal);
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding-bottom: 2px;
+  border-bottom: 1px solid transparent;
+  transition: color var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out);
+  white-space: nowrap;
+}
+
+.primaryNav a:hover,
+.navBtn:hover,
+.primaryNav a.navActive,
+.navBtn.navActive {
+  color: var(--gold-500);
+  border-bottom-color: var(--gold-500);
+}
+
+/* Icon actions */
+.iconActions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.iconBtn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  color: var(--charcoal);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-out),
+              background var(--duration-fast) var(--ease-out);
+}
+
+.iconBtn:hover {
+  color: var(--gold-500);
+  background: rgba(201, 162, 75, 0.07);
+}
+
+.badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  background: var(--gold-gradient);
+  color: var(--charcoal);
+  font-family: var(--font-sans);
+  font-size: 9px;
+  font-weight: 700;
+  border-radius: var(--radius-pill);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+/* Mobile hamburger — hidden on desktop */
+.hamburgerBtn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--charcoal);
+  border-radius: var(--radius-md);
+  transition: color var(--duration-fast) var(--ease-out);
+}
+.hamburgerBtn:hover { color: var(--gold-500); }
+
+/* ── 2. Search overlay ───────────────────────────────────────────── */
+.searchBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(32, 32, 29, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 700;
+  animation: fadeIn 180ms var(--ease-out);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.searchOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 701;
+  background: var(--white);
+  padding: var(--space-6) var(--space-6) var(--space-7);
+  box-shadow: var(--shadow-4);
+  animation: slideDown 220ms var(--ease-out);
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-100%); opacity: 0; }
+  to   { transform: translateY(0);     opacity: 1; }
+}
+
+.searchForm {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  border-bottom: 2px solid var(--hairline);
+  padding-bottom: var(--space-4);
+  color: var(--charcoal-muted);
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.searchForm:focus-within {
+  border-color: var(--gold-500);
+  color: var(--gold-500);
+}
+
+.searchInput {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: var(--font-serif);
+  font-size: clamp(22px, 3vw, 36px);
+  font-weight: 300;
+  color: var(--charcoal);
+  padding: var(--space-3) 0;
+}
+
+.searchInput::placeholder {
+  color: var(--charcoal-muted);
+  opacity: 0.4;
+}
+
+.searchSubmitBtn {
+  flex-shrink: 0;
+  padding: 10px 24px;
+  background: var(--gold-gradient);
+  color: var(--charcoal);
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+.searchSubmitBtn:hover { opacity: 0.88; }
+
+.searchCloseBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--charcoal-muted);
+  border-radius: var(--radius-md);
+  transition: color var(--duration-fast) var(--ease-out);
+  flex-shrink: 0;
+}
+.searchCloseBtn:hover { color: var(--charcoal); }
+
+.searchCategories {
+  max-width: var(--max-width);
+  margin: var(--space-6) auto 0;
+}
+
+.searchCatLabel {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--charcoal-muted);
+  margin-bottom: var(--space-4);
+}
+
+.searchCatList {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.searchCatItem {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 7px 16px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--charcoal);
+  text-decoration: none;
+  transition: border-color var(--duration-fast) var(--ease-out),
+              color var(--duration-fast) var(--ease-out),
+              background var(--duration-fast) var(--ease-out);
+}
+
+.searchCatItem:hover {
+  border-color: var(--gold-500);
+  color: var(--gold-700);
+  background: rgba(201, 162, 75, 0.05);
+}
+
+.searchCatCount {
+  font-size: 11px;
+  color: var(--charcoal-muted);
+  opacity: 0.6;
+}
+
+/* ── 3. Mobile drawer ────────────────────────────────────────────── */
+.drawerBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(32, 32, 29, 0.5);
+  backdrop-filter: blur(3px);
+  z-index: 800;
+  animation: fadeIn 200ms var(--ease-out);
+}
+
+.mobileDrawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: min(340px, 90vw);
+  background: var(--ivory);
+  z-index: 801;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  animation: slideInLeft 260ms var(--ease-out);
+}
+
+@keyframes slideInLeft {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(0); }
+}
+
+.drawerHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-5) var(--space-6);
+  border-bottom: 1px solid var(--hairline);
+  flex-shrink: 0;
+}
+
+.drawerLogo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  text-decoration: none;
+}
+
+.drawerLogoText {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 500;
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.drawerClose {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--charcoal-muted);
+  border-radius: var(--radius-md);
+  transition: color var(--duration-fast) var(--ease-out);
+}
+.drawerClose:hover { color: var(--charcoal); }
+
+.drawerNav {
+  list-style: none;
+  padding: var(--space-5) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.drawerNav > li {
+  border-bottom: 1px solid var(--hairline);
+}
+
+.drawerNav > li > a {
+  display: block;
+  padding: var(--space-4) 0;
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--charcoal);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.drawerNav > li > a:hover { color: var(--gold-500); }
+
+.drawerCatHeading {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--charcoal-muted);
+  padding: var(--space-4) 0 var(--space-3);
+}
+
+.drawerCatList {
+  list-style: none;
+  padding-bottom: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.drawerCatList a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--charcoal-muted);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.drawerCatList a:hover { color: var(--gold-500); }
+
+.drawerCount {
+  font-size: 11px;
+  color: var(--charcoal-muted);
+  opacity: 0.5;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .primaryNav { display: none; }
+  .hamburgerBtn { display: flex; }
+  .headerInner { padding: 0 var(--space-4); }
+}
+
+

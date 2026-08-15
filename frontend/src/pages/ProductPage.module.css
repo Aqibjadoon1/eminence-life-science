@@ -1,0 +1,440 @@
+.breadcrumb {
+  padding-top: var(--space-5);
+  padding-bottom: 0;
+}
+
+.breadcrumb ol {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.breadcrumb a {
+  font-size: 12px;
+  color: var(--charcoal-muted);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.breadcrumb a:hover { color: var(--gold-500); }
+
+.breadcrumb li[aria-current] {
+  font-size: 12px;
+  color: var(--charcoal);
+}
+
+.breadcrumb li[aria-hidden] {
+  font-size: 12px;
+  color: var(--hairline);
+}
+
+/* Main product layout */
+.product {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-12);
+  padding-top: var(--space-8);
+  padding-bottom: var(--space-10);
+  align-items: start;
+}
+
+/* Gallery */
+.gallery {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  position: sticky;
+  top: calc(72px + 24px);
+}
+
+.mainImage {
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--ivory);
+}
+
+.mainImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 600ms var(--ease-out);
+}
+
+.mainImage:hover .mainImg {
+  transform: scale(1.03);
+}
+
+.thumbnails {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.thumb {
+  width: 72px;
+  aspect-ratio: 4/5;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+  cursor: pointer;
+  background: none;
+  padding: 0;
+  transition: border-color var(--duration-fast) var(--ease-out);
+  flex-shrink: 0;
+}
+
+.thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.thumbActive,
+.thumb:hover {
+  border-color: var(--gold-500);
+}
+
+/* Info column */
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  padding-top: var(--space-3);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.name {
+  font-size: clamp(28px, 3.5vw, 44px);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--charcoal);
+}
+
+/* Rating */
+.rating {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--gold-500);
+}
+
+.ratingText {
+  font-size: 12px;
+  color: var(--charcoal-muted);
+}
+
+/* Price */
+.priceBlock {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+}
+
+.price {
+  font-size: 20px !important;
+}
+
+.description {
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--charcoal-muted);
+}
+
+/* Category-specific attribute spec grid */
+.attrGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2) var(--space-5);
+  padding: var(--space-5);
+  background: var(--ivory);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--hairline);
+}
+
+.attrItem {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.attrKey {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--charcoal-muted);
+}
+
+.attrValue {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--charcoal);
+}
+
+/* Add to cart row */
+.addRow {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.qty {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-sm);
+  padding: 10px var(--space-4);
+  background: var(--white);
+  flex-shrink: 0;
+}
+
+.qty button {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: var(--charcoal);
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.qty button:hover:not(:disabled) { color: var(--gold-500); }
+.qty button:disabled { opacity: 0.3; cursor: not-allowed; }
+
+.qty span {
+  font-size: 15px;
+  font-weight: 500;
+  min-width: 28px;
+  text-align: center;
+}
+
+.addBtn {
+  flex: 1;
+  min-width: 180px;
+}
+
+.stockWarning {
+  font-size: 12px;
+  color: var(--gold-700);
+  letter-spacing: 0.06em;
+}
+
+/* Tabs */
+.tabs {
+  padding-bottom: var(--space-11);
+}
+
+.tabHeaders {
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.tabBtn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--space-5) 0;
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--hairline);
+  cursor: pointer;
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--charcoal-muted);
+  text-align: left;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.tabBtn:last-child { border-bottom: none; }
+
+.tabBtn:hover,
+.tabBtn.tabActive {
+  color: var(--charcoal);
+}
+
+.tabBtn.tabActive {
+  color: var(--gold-700);
+}
+
+.tabPanel {
+  padding: var(--space-7) 0 var(--space-5);
+  animation: fadeUp 200ms var(--ease-out) both;
+}
+
+.tabText {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.85;
+  color: var(--charcoal-muted);
+  max-width: 640px;
+}
+
+.ingredientListText {
+  font-size: 13px;
+  word-break: break-word;
+}
+
+.ingredientList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  max-width: 540px;
+}
+
+.ingredientItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--font-serif);
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--charcoal);
+}
+
+.ingredientDot {
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold-gradient);
+}
+
+/* Reviews */
+.reviews {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  max-width: 640px;
+}
+
+.review {
+  padding-bottom: var(--space-6);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.review:last-child { border-bottom: none; }
+
+.reviewHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+}
+
+.reviewerName {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--charcoal);
+}
+
+.reviewStars { display: flex; color: var(--gold-500); }
+
+.reviewComment {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.75;
+  color: var(--charcoal-muted);
+}
+
+/* Related */
+.relatedSection { background: var(--ivory); }
+
+.relatedHeader {
+  text-align: center;
+  margin-bottom: var(--space-9);
+}
+
+.relatedHeading {
+  font-size: clamp(28px, 3vw, 40px);
+  font-weight: 400;
+  color: var(--charcoal);
+  margin-top: var(--space-3);
+}
+
+.relatedGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+}
+
+/* Skeletons */
+.skeleton {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-12);
+  padding-top: var(--space-8);
+  padding-bottom: var(--space-10);
+}
+
+.skeletonGallery .skeletonMainImg {
+  aspect-ratio: 4/5;
+  border-radius: var(--radius-lg);
+  width: 100%;
+}
+
+.skeletonInfo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding-top: var(--space-3);
+}
+
+.skeletonLine { border-radius: 4px; }
+
+/* Error */
+.error {
+  text-align: center;
+  padding: var(--space-12) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  font-family: var(--font-serif);
+  font-size: 22px;
+  color: var(--charcoal-muted);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .product { gap: var(--space-8); }
+  .relatedGrid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .product {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+    padding-top: var(--space-5);
+  }
+
+  .gallery { position: static; }
+
+  .addRow { flex-direction: column; align-items: stretch; }
+  .qty { justify-content: center; }
+  .addBtn { width: 100%; min-width: unset; }
+
+  .relatedGrid { grid-template-columns: 1fr; max-width: 340px; margin: 0 auto; }
+
+  .skeleton { grid-template-columns: 1fr; }
+}

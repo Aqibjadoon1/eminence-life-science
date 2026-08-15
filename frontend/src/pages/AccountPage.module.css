@@ -1,0 +1,312 @@
+/* Auth page */
+.authPage {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: var(--space-9);
+  padding-bottom: var(--space-11);
+}
+
+.authCard {
+  width: 100%;
+  max-width: 460px;
+  background: var(--white);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  padding: var(--space-9) var(--space-8);
+}
+
+.authHeader {
+  margin-bottom: var(--space-7);
+}
+
+.authTitle {
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 400;
+  color: var(--charcoal);
+  margin-top: var(--space-3);
+}
+
+/* Mode toggle */
+.modeToggle {
+  display: flex;
+  border-bottom: 1px solid var(--hairline);
+  margin-bottom: var(--space-6);
+}
+
+.modeBtn {
+  flex: 1;
+  padding: var(--space-3) 0;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--charcoal-muted);
+  cursor: pointer;
+  transition: color var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out);
+}
+
+.modeBtnActive {
+  color: var(--charcoal);
+  border-bottom-color: var(--gold-500);
+}
+
+/* Form */
+.authForm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--charcoal-muted);
+}
+
+.input {
+  background: var(--ivory);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-sm);
+  padding: 12px var(--space-4);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--charcoal);
+  outline: none;
+  transition: border-color var(--duration-fast) var(--ease-out);
+  min-height: 44px;
+}
+
+.input:focus {
+  border-color: var(--gold-500);
+  background: var(--white);
+}
+
+.input::placeholder {
+  color: var(--charcoal-muted);
+  opacity: 0.5;
+}
+
+.errorMsg {
+  font-size: 13px;
+  color: var(--error);
+  background: rgba(192, 57, 43, 0.06);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+}
+
+.submitBtn {
+  width: 100%;
+  margin-top: var(--space-2);
+}
+
+/* Dashboard */
+.dashboard {
+  padding-top: var(--space-9);
+  padding-bottom: var(--space-11);
+}
+
+.dashHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: var(--space-8);
+  gap: var(--space-4);
+}
+
+.dashTitle {
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 400;
+  color: var(--charcoal);
+  margin-top: var(--space-3);
+}
+
+/* Tab nav */
+.tabNav {
+  display: flex;
+  border-bottom: 1px solid var(--hairline);
+  margin-bottom: var(--space-8);
+  gap: var(--space-6);
+}
+
+.tabNavBtn {
+  padding: var(--space-3) 0;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--charcoal-muted);
+  cursor: pointer;
+  transition: color var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out);
+}
+
+.tabNavActive {
+  color: var(--charcoal);
+  border-bottom-color: var(--gold-500);
+}
+
+/* Orders panel */
+.ordersPanel {}
+
+.loadingOrders {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.orderSkeletonRow {
+  display: flex;
+  gap: var(--space-4);
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.skeletonCell {
+  height: 16px;
+  border-radius: 4px;
+}
+
+.emptyOrders {
+  text-align: center;
+  padding: var(--space-10) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.emptyTitle {
+  font-family: var(--font-serif);
+  font-size: 26px;
+  font-weight: 400;
+  color: var(--charcoal);
+}
+
+.emptyText {
+  font-size: 14px;
+  color: var(--charcoal-muted);
+  max-width: 300px;
+}
+
+.orderList {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Order row */
+.orderRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-5) var(--space-4);
+  border-bottom: 1px solid var(--hairline);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+.orderRow:hover {
+  background: var(--ivory);
+}
+
+.orderInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.orderId {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--charcoal);
+  letter-spacing: 0.04em;
+}
+
+.orderDate {
+  font-size: 12px;
+  color: var(--charcoal-muted);
+}
+
+.orderStatus {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.orderTotal {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--charcoal);
+  white-space: nowrap;
+}
+
+/* Profile panel */
+.profilePanel {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-width: 520px;
+}
+
+.profileField {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-5) 0;
+  border-bottom: 1px solid var(--hairline);
+  gap: var(--space-4);
+}
+
+.profileLabel {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--charcoal-muted);
+  flex-shrink: 0;
+}
+
+.profileValue {
+  font-size: 15px;
+  color: var(--charcoal);
+  text-align: right;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .authCard {
+    padding: var(--space-7) var(--space-5);
+  }
+
+  .dashHeader {
+    flex-direction: column;
+  }
+
+  .orderRow {
+    flex-wrap: wrap;
+  }
+}

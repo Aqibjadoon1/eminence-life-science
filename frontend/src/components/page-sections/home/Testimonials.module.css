@@ -1,0 +1,112 @@
+.section {
+  background: var(--white);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: var(--space-10);
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity var(--duration-slow) var(--ease-out),
+              transform var(--duration-slow) var(--ease-out);
+}
+
+.header.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.heading {
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 400;
+  color: var(--charcoal);
+  margin-top: var(--space-3);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-7);
+}
+
+/* Card */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  padding: var(--space-8) var(--space-6);
+  background: var(--ivory);
+  border-radius: var(--radius-lg);
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 500ms var(--ease-out),
+              transform 500ms var(--ease-out);
+  position: relative;
+  overflow: hidden;
+}
+
+.card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.quoteGlyph {
+  font-family: var(--font-serif);
+  font-size: 80px;
+  font-weight: 400;
+  line-height: 0.6;
+  color: var(--gold-300);
+  opacity: 0.5;
+  position: absolute;
+  top: var(--space-5);
+  left: var(--space-5);
+}
+
+/* Quote text — serif italic, no star rows */
+.quote {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--charcoal);
+  position: relative;
+  z-index: 1;
+  margin-top: var(--space-6); /* clear the quote glyph */
+}
+
+.attribution {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.author {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--charcoal);
+}
+
+.location {
+  font-size: 12px;
+  color: var(--charcoal-muted);
+  letter-spacing: 0.04em;
+}
+
+.rule {
+  height: 2px;
+  background: var(--gold-gradient);
+  border-radius: 1px;
+  width: 40px;
+}
+
+@media (max-width: 1024px) {
+  .grid { grid-template-columns: 1fr; max-width: 540px; margin: 0 auto; }
+}
+
+@media (min-width: 640px) and (max-width: 1024px) {
+  .grid { grid-template-columns: 1fr 1fr; max-width: 100%; }
+}

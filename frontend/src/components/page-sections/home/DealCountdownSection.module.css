@@ -1,0 +1,222 @@
+.section { background: var(--ivory); }
+
+/* Header */
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-8);
+  margin-bottom: var(--space-10);
+  flex-wrap: wrap;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out);
+}
+.header.visible { opacity: 1; transform: none; }
+
+.headerText { max-width: 460px; display: flex; flex-direction: column; gap: var(--space-3); }
+
+.heading {
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 400;
+  color: var(--charcoal);
+}
+
+.sub {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--charcoal-muted);
+  line-height: 1.7;
+}
+
+/* Countdown timer */
+.timerBlock {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-shrink: 0;
+}
+
+.timerUnit {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.timerColon {
+  font-family: var(--font-serif);
+  font-size: 32px;
+  font-weight: 300;
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0 4px;
+  line-height: 1;
+  padding-bottom: 16px; /* align with digit block */
+}
+
+.timerBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 64px;
+}
+
+.timerDigit {
+  font-family: var(--font-serif);
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 1;
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.02em;
+  display: block;
+  font-variant-numeric: tabular-nums;
+}
+
+.timerLabel {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--charcoal-muted);
+}
+
+/* Product grid — 6 cols */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: var(--space-4);
+}
+
+/* Deal card */
+.card {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 400ms var(--ease-out), transform 400ms var(--ease-out);
+}
+.card.visible { opacity: 1; transform: none; }
+
+.imgWrap {
+  display: block;
+  position: relative;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--white);
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 450ms var(--ease-out);
+}
+.card:hover .img { transform: scale(1.04); }
+
+/* Gold-outline sale badge — no red */
+.saleBadge {
+  position: absolute;
+  top: var(--space-2);
+  left: var(--space-2);
+  padding: 3px 8px;
+  border: 1px solid var(--gold-500);
+  border-radius: var(--radius-pill);
+  background: rgba(252,250,245,0.92);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gold-700);
+}
+
+.wishBtn {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(252,250,245,0.9);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--charcoal-muted);
+  transition: color var(--duration-fast) var(--ease-out);
+  z-index: 2;
+}
+.wishBtn:hover { color: var(--gold-500); }
+.wishActive { color: var(--gold-500) !important; }
+
+.body {
+  padding: var(--space-3) var(--space-1) 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.name {
+  font-family: var(--font-serif);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--charcoal);
+  text-decoration: none;
+  line-height: 1.3;
+  transition: color var(--duration-fast) var(--ease-out);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.name:hover { color: var(--gold-700); }
+
+.priceRow { display: flex; align-items: baseline; gap: var(--space-1); flex-wrap: wrap; }
+
+.addBtn {
+  margin-top: var(--space-1);
+  padding: 7px 0;
+  background: none;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--charcoal-muted);
+  cursor: pointer;
+  width: 100%;
+  transition: background var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out),
+              color var(--duration-fast) var(--ease-out);
+}
+.addBtn:hover {
+  background: var(--gold-gradient);
+  border-color: transparent;
+  color: var(--charcoal);
+}
+
+/* Skeleton */
+.skeletonCard { display: flex; flex-direction: column; gap: var(--space-2); }
+.skeletonImg  { aspect-ratio: 3/4; border-radius: var(--radius-md); }
+.skeletonLine { height: 12px; border-radius: 4px; }
+
+.exploreCta { display: flex; justify-content: center; margin-top: var(--space-9); }
+
+/* Responsive */
+@media (max-width: 1280px) { .grid { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 900px)  { .grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 640px)  {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+  .header { flex-direction: column; }
+  .timerBlock { align-self: flex-start; }
+  .timerBox { min-width: 52px; }
+  .timerDigit { font-size: 32px; }
+}
