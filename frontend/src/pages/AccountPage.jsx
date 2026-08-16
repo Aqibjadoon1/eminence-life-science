@@ -5,7 +5,7 @@ import useAuthStore  from '../store/useAuthStore.js';
 import useCartStore  from '../store/useCartStore.js';
 import useToastStore from '../store/useToastStore.js';
 import { OrderService } from '../services/OrderService.js';
-import { formatPrice, formatDate } from '../utils/formatting.js';
+import { formatDate } from '../utils/formatting.js';
 import { canonicalUrl } from '../utils/seo.js';
 import styles from './AccountPage.module.css';
 
@@ -309,7 +309,6 @@ function OrderRow({ order }) {
       >
         {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
       </span>
-      <span className={styles.orderTotal}>{formatPrice(order.total)}</span>
       <ChevronRightIcon />
     </Link>
   );

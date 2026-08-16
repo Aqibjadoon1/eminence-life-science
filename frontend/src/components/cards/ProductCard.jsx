@@ -1,13 +1,11 @@
 import { Link } from 'react-router-dom';
 import useCartStore  from '../../store/useCartStore.js';
 import useToastStore from '../../store/useToastStore.js';
-import { formatPrice } from '../../utils/formatting.js';
 import { useIntersectionObserver } from '../../utils/useIntersectionObserver.js';
 import styles from './ProductCard.module.css';
 
 /**
  * ProductCard — used in bestselller rows, shop grid, and related products.
- * Deliberately understated price display — no red badges, no slash-price shouting.
  */
 export default function ProductCard({ product, priority = false }) {
   const addItem  = useCartStore((s) => s.addItem);
@@ -16,7 +14,7 @@ export default function ProductCard({ product, priority = false }) {
 
   if (!product) return null;
 
-  const { name, slug, price, sale_price, image_urls, concern_tags, avg_rating, review_count } = product;
+  const { name, slug, image_urls, concern_tags, avg_rating, review_count } = product;
   const primaryImage = image_urls?.[0] || 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=600&q=70';
 
   const handleAddToCart = async (e) => {
@@ -70,18 +68,6 @@ export default function ProductCard({ product, priority = false }) {
         )}
 
         <div className={styles.footer}>
-          {/* Price — understated, never bold-red */}
-          <div className={styles.priceBlock}>
-            {sale_price ? (
-              <>
-                <span className={`price price-sale`}>{formatPrice(sale_price)}</span>
-                <span className={`price price-original`}>{formatPrice(price)}</span>
-              </>
-            ) : (
-              <span className="price">{formatPrice(price)}</span>
-            )}
-          </div>
-
           <button
             className={styles.addBtn}
             onClick={handleAddToCart}

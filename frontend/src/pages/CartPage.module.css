@@ -32,7 +32,7 @@
 
 .item {
   display: grid;
-  grid-template-columns: 100px 1fr auto;
+  grid-template-columns: 100px 1fr;
   gap: var(--space-5);
   padding-bottom: var(--space-6);
   border-bottom: 1px solid var(--hairline);
@@ -93,11 +93,6 @@
 .removeBtn:hover::before { transform: translateX(0); }
 .removeBtn:hover { color: var(--ivory); }
 
-.itemTotal {
-  font-size: 14px; font-weight: 500; color: var(--charcoal);
-  white-space: nowrap; padding-top: 4px;
-}
-
 /* Summary card */
 .summary {
   position: sticky; top: calc(72px + 24px);
@@ -106,18 +101,14 @@
   display: flex; flex-direction: column; gap: var(--space-4);
 }
 .summaryTitle { font-family: var(--font-serif); font-size: 20px; font-weight: 500; color: var(--charcoal); padding-bottom: var(--space-4); border-bottom: 1px solid var(--hairline); }
-.summaryRow { display: flex; justify-content: space-between; font-size: 13px; color: var(--charcoal-muted); }
-.summaryTotal { font-size: 16px; font-weight: 500; color: var(--charcoal); padding-top: var(--space-3); border-top: 1px solid var(--hairline); }
-.freeShip { font-size: 11px; color: var(--gold-700); letter-spacing: 0.04em; }
 .continueShopping { text-align: center; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--charcoal-muted); text-decoration: none; transition: color var(--duration-fast) var(--ease-out); }
 .continueShopping:hover { color: var(--gold-500); }
 
 @media (max-width: 900px) {
   .layout { grid-template-columns: 1fr; }
   .summary { position: static; }
-  .item { grid-template-columns: 80px 1fr auto; }
+  .item { grid-template-columns: 80px 1fr; }
 }
 @media (max-width: 480px) {
   .item { grid-template-columns: 72px 1fr; }
-  .itemTotal { display: none; }
 }

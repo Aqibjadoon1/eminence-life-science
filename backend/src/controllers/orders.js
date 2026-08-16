@@ -5,17 +5,34 @@ const SHIPPING_FEE = 200; // PKR flat rate
 export async function createOrder(req, res, next) {
   const client = await pool.connect();
   try {
-    const { address_id, payment_method, items } = req.body;
+    const {
+      address_id,
+      payment_method = 'whatsapp',
+      items,
+      customer_name,
+      order_note,
+    } = req.body;
 
-    if (!address_id || !payment_method || !items?.length) {
-      return res.status(400).json({ error: 'address_id, payment_method, and items are required.' });
+    if (!address_id || !items?.length) {
+      return res.status(400).json({ error: 'address_id and items are required.' });
     }
 
-    if (!['jazzcash', 'easypaisa', 'cod'].includes(payment_method)) {
+    // Single hand-off path: orders are conveyed over WhatsApp — no
+    // payment gateways exist anymore. Kept as a column for the record.
+    if (payment_method !== 'whatsapp') {
       return res.status(400).json({ error: 'Invalid payment method.' });
     }
 
     await client.query('BEGIN');
+
+    // Address must belong to the signed-in user
+    const addrRes = await client.query(
+      'SELECT id FROM addresses WHERE id = $1 AND user_id = $2',
+      [address_id, req.user.id]
+    );
+    if (!addrRes.rows.length) {
+      throw { status: 400, message: 'Invalid delivery address.' };
+    }
 
     let subtotal = 0;
     const orderItems = [];
@@ -46,9 +63,19 @@ export async function createOrder(req, res, next) {
     const total = subtotal + SHIPPING_FEE;
 
     const orderRes = await client.query(
-      `INSERT INTO orders(user_id, address_id, subtotal, shipping_fee, total, payment_method)
-       VALUES($1,$2,$3,$4,$5,$6) RETURNING *`,
-      [req.user.id, address_id, subtotal, SHIPPING_FEE, total, payment_method]
+      `INSERT INTO orders(user_id, address_id, subtotal, shipping_fee, total, payment_method, payment_status, customer_name, order_note)
+       VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *`,
+      [
+        req.user.id,
+        address_id,
+        subtotal,
+        SHIPPING_FEE,
+        total,
+        payment_method,
+        'sent_to_whatsapp',
+        customer_name || null,
+        order_note || null,
+      ]
     );
     const order = orderRes.rows[0];
 

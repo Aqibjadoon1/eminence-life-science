@@ -257,13 +257,6 @@
   text-transform: uppercase;
 }
 
-.orderTotal {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--charcoal);
-  white-space: nowrap;
-}
-
 /* Profile panel */
 .profilePanel {
   display: flex;

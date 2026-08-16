@@ -200,14 +200,6 @@
 .removeBtn:hover::before { transform: translateX(0); }
 .removeBtn:hover { color: var(--ivory); }
 
-.itemLineTotal {
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--charcoal);
-  white-space: nowrap;
-  padding-top: 2px;
-}
-
 /* Footer */
 .footer {
   border-top: 1px solid var(--hairline);
@@ -216,107 +208,6 @@
   flex-direction: column;
   gap: var(--space-3);
   flex-shrink: 0;
-}
-
-/* Gift wrap */
-.giftWrap {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-3) var(--space-4);
-  background: var(--ivory);
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  font-family: var(--font-sans);
-  transition: background var(--duration-fast) var(--ease-out);
-}
-.giftWrap:hover { background: rgba(201,162,75,0.06); }
-
-.checkbox {
-  width: 16px;
-  height: 16px;
-  accent-color: var(--gold-500);
-  cursor: pointer;
-  flex-shrink: 0;
-}
-
-.giftLabel {
-  font-size: 13px;
-  color: var(--charcoal);
-  flex: 1;
-}
-
-.giftFee {
-  font-size: 12px;
-  color: var(--charcoal-muted);
-  margin-left: auto;
-}
-
-/* Order note */
-.noteSection {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-}
-
-.noteToggle {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-family: var(--font-sans);
-  font-size: 13px;
-  color: var(--charcoal-muted);
-  padding: var(--space-2) 0;
-  width: 100%;
-  text-align: left;
-  transition: color var(--duration-fast) var(--ease-out);
-}
-.noteToggle:hover { color: var(--charcoal); }
-
-.noteInput {
-  resize: none;
-  border: 1px solid var(--hairline);
-  border-radius: var(--radius-sm);
-  padding: var(--space-3) var(--space-4);
-  font-family: var(--font-sans);
-  font-size: 13px;
-  color: var(--charcoal);
-  background: var(--white);
-  outline: none;
-  line-height: 1.5;
-  transition: border-color var(--duration-fast) var(--ease-out);
-  animation: fadeUp 200ms var(--ease-out);
-}
-.noteInput:focus { border-color: var(--gold-500); }
-.noteInput::placeholder { color: var(--charcoal-muted); opacity: 0.5; }
-
-/* Totals */
-.totals { display: flex; flex-direction: column; gap: var(--space-2); }
-
-.totalRow {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 13px;
-  color: var(--charcoal-muted);
-}
-
-.totalBold {
-  font-size: 15px;
-  font-weight: 500;
-  color: var(--charcoal);
-  padding-top: var(--space-2);
-  border-top: 1px solid var(--hairline);
-  margin-top: var(--space-1);
-}
-
-.shippingNote {
-  font-size: 11px;
-  color: var(--gold-700);
-  letter-spacing: 0.04em;
 }
 
 /* CTA buttons */

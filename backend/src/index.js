@@ -12,8 +12,13 @@ import orderRoutes      from './routes/orders.js';
 import newsletterRoutes from './routes/newsletter.js';
 import addressRoutes    from './routes/addresses.js';
 import { getSitemap }   from './controllers/sitemap.js';
+import { getWhatsappConfig } from './controllers/config.js';
+import { ensureLatestSchema } from './db/ensure_schema.js';
 
 dotenv.config();
+
+// Bring the schema to migration 004 before serving traffic
+ensureLatestSchema();
 
 const app  = express();
 const PORT = process.env.PORT || 5000;
@@ -55,6 +60,9 @@ app.get('/api/health', (_req, res) => {
 
 // ── Sitemap (DB-generated; proxied on the frontend origin) ─────
 app.get('/api/sitemap.xml', getSitemap);
+
+// ── Public config (WhatsApp order number — never hardcoded client-side) ──
+app.get('/api/config/whatsapp-order', getWhatsappConfig);
 
 // ── Global error handler ─────────────────────────────────────
 app.use((err, _req, res, _next) => {

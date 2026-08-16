@@ -7,7 +7,6 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useFeaturedProducts } from '../../../hooks/useProducts.js';
 import { useIntersectionObserver } from '../../../utils/useIntersectionObserver.js';
-import { formatPrice } from '../../../utils/formatting.js';
 import useCartStore     from '../../../store/useCartStore.js';
 import useWishlistStore from '../../../store/useWishlistStore.js';
 import useToastStore    from '../../../store/useToastStore.js';
@@ -58,7 +57,7 @@ export default function DealCountdownSection() {
               Exclusive Deals
             </h2>
             <p className={styles.sub}>
-              Hand-picked formulas at special pricing — offer ends when the timer does.
+              Hand-picked formulas — refreshed regularly, so there is always something new to try.
             </p>
           </div>
 
@@ -114,8 +113,6 @@ function DealCard({ product, delay }) {
   const { toggle, isWishlisted } = useWishlistStore();
   const addToast   = useToastStore((s) => s.addToast);
   const wishlisted = isWishlisted(product.id);
-  const isOnSale   = !!product.sale_price;
-  const displayPrice = product.sale_price ?? product.price;
   const image = product.image_urls?.[0] || 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=600&q=70';
 
   return (
@@ -126,13 +123,6 @@ function DealCard({ product, delay }) {
     >
       <Link to={`/product/${product.slug}`} className={styles.imgWrap} tabIndex={-1} aria-hidden="true">
         <img src={image} alt={product.name} width={400} height={480} loading="lazy" className={styles.img} />
-
-        {/* Gold-outline sale badge — NO red */}
-        {isOnSale && (
-          <span className={styles.saleBadge}>
-            -{Math.round((1 - product.sale_price / product.price) * 100)}%
-          </span>
-        )}
 
         <button
           className={`${styles.wishBtn} ${wishlisted ? styles.wishActive : ''}`}
@@ -146,18 +136,6 @@ function DealCard({ product, delay }) {
 
       <div className={styles.body}>
         <Link to={`/product/${product.slug}`} className={styles.name}>{product.name}</Link>
-        <div className={styles.priceRow}>
-          {isOnSale ? (
-            <>
-              <span className={`price price-sale`} style={{ fontSize: '15px', fontWeight: 500, color: 'var(--charcoal)' }}>
-                {formatPrice(displayPrice)}
-              </span>
-              <span className="price price-original">{formatPrice(product.price)}</span>
-            </>
-          ) : (
-            <span className="price">{formatPrice(displayPrice)}</span>
-          )}
-        </div>
         <button
           className={styles.addBtn}
           onClick={() => { addItem(product.id); addToast(`${product.name} added to cart`, 'success'); }}

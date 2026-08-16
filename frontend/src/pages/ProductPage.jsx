@@ -4,7 +4,6 @@ import { Helmet } from 'react-helmet-async';
 import { useProduct } from '../hooks/useProducts.js';
 import useCartStore  from '../store/useCartStore.js';
 import useToastStore from '../store/useToastStore.js';
-import { formatPrice } from '../utils/formatting.js';
 import ProductCard from '../components/cards/ProductCard.jsx';
 import { canonicalUrl } from '../utils/seo.js';
 import styles from './ProductPage.module.css';
@@ -120,18 +119,6 @@ export default function ProductPage() {
               </span>
             </div>
           )}
-
-          {/* Price */}
-          <div className={styles.priceBlock}>
-            {product.sale_price ? (
-              <>
-                <span className={`price price-sale ${styles.price}`}>{formatPrice(product.sale_price)}</span>
-                <span className={`price price-original`}>{formatPrice(product.price)}</span>
-              </>
-            ) : (
-              <span className={`price ${styles.price}`}>{formatPrice(product.price)}</span>
-            )}
-          </div>
 
           <hr className="hairline" />
 

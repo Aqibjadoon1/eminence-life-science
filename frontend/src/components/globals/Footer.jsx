@@ -100,10 +100,8 @@ export default function Footer() {
           © {year} Eminence Life Science. All rights reserved.
         </p>
 
-        <div className={styles.paymentBadges} aria-label="Accepted payment methods">
-          <span className={styles.payBadge}>JazzCash</span>
-          <span className={styles.payBadge}>EasyPaisa</span>
-          <span className={styles.payBadge}>COD</span>
+        <div className={styles.paymentBadges} aria-label="How to order">
+          <span className={styles.payBadge}>Orders via WhatsApp</span>
         </div>
 
         <div className={styles.legalLinks}>

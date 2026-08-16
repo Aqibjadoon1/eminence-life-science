@@ -15,12 +15,6 @@ const useCartStore = create((set, get) => ({
   get itemCount() {
     return get().items.reduce((sum, i) => sum + i.quantity, 0);
   },
-  get subtotal() {
-    return get().items.reduce((sum, i) => {
-      const price = i.sale_price ?? i.price;
-      return sum + price * i.quantity;
-    }, 0);
-  },
 
   // ── Actions ──────────────────────────────────────────────
   openCart:  () => set({ isOpen: true }),

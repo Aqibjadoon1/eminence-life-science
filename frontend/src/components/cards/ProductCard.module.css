@@ -113,20 +113,13 @@
   font-size: 11px;
 }
 
-/* Footer row: price + add btn */
+/* Footer row: add btn */
 .footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-top: auto;
   padding-top: var(--space-3);
-}
-
-.priceBlock {
-  display: flex;
-  align-items: baseline;
-  gap: 6px;
-  flex-wrap: wrap;
 }
 
 /* Add to cart button — compact icon button */

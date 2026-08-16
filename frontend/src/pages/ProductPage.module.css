@@ -98,17 +98,6 @@
   color: var(--charcoal-muted);
 }
 
-/* Price */
-.priceBlock {
-  display: flex;
-  align-items: baseline;
-  gap: var(--space-3);
-}
-
-.price {
-  font-size: 20px !important;
-}
-
 .description {
   font-size: 15px;
   font-weight: 300;

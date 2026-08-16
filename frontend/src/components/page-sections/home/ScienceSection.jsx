@@ -6,7 +6,7 @@ const ACTIVES = [
   { name: 'Retinol',          desc: 'Accelerates cell turnover, reducing lines and improving firmness.' },
   { name: 'Vitamin C',        desc: 'Neutralises free radicals and brightens uneven pigmentation.' },
   { name: 'Peptide Complex',  desc: 'Signals collagen synthesis for visibly firmer, denser skin.' },
-  { name: 'Hyaluronic Acid',  desc: 'Binds up to 1,000× its weight in water for sustained plumping.' },
+  { name: 'Hyaluronic Acid',  desc: 'Binds up to 1000× its weight in water for sustained plumping.' },
 ];
 
 export default function ScienceSection() {

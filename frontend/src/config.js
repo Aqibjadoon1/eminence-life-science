@@ -35,23 +35,19 @@ export const API = {
   MY_ORDERS:      `${BASE_URL}/orders/mine`,
   ORDER:          (id)    => `${BASE_URL}/orders/${id}`,
 
+  // Addresses
+  ADDRESSES:      `${BASE_URL}/addresses`,
+
   // Newsletter
   NEWSLETTER:     `${BASE_URL}/newsletter/subscribe`,
+
+  // Public config
+  WHATSAPP_ORDER: `${BASE_URL}/config/whatsapp-order`,
 };
 
-export const SHIPPING_FEE = 200; // PKR
-
-export const PAYMENT_METHODS = [
-  { id: 'jazzcash',  label: 'JazzCash',  icon: '📱' },
-  { id: 'easypaisa', label: 'EasyPaisa', icon: '📲' },
-  { id: 'cod',       label: 'Cash on Delivery', icon: '💵' },
-];
-
 export const SORT_OPTIONS = [
-  { label: 'Newest',          value: 'newest' },
-  { label: 'Price: Low–High', value: 'price-asc' },
-  { label: 'Price: High–Low', value: 'price-desc' },
-  { label: 'Most Reviewed',   value: 'popular' },
+  { label: 'Newest',        value: 'newest' },
+  { label: 'Most Reviewed', value: 'popular' },
 ];
 
 // Static concern tags used only as fallback / serum-era legacy

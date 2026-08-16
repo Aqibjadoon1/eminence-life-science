@@ -119,22 +119,6 @@
 }
 .card:hover .img { transform: scale(1.04); }
 
-/* Gold-outline sale badge — no red */
-.saleBadge {
-  position: absolute;
-  top: var(--space-2);
-  left: var(--space-2);
-  padding: 3px 8px;
-  border: 1px solid var(--gold-500);
-  border-radius: var(--radius-pill);
-  background: rgba(252,250,245,0.92);
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--gold-700);
-}
-
 .wishBtn {
   position: absolute;
   top: var(--space-2);
@@ -189,8 +173,6 @@
   overflow: hidden;
 }
 .name:hover { color: var(--gold-700); }
-
-.priceRow { display: flex; align-items: baseline; gap: var(--space-1); flex-wrap: wrap; }
 
 .addBtn {
   margin-top: var(--space-1);

@@ -1,77 +1,39 @@
 /* ═══════════════════════════════════════════════════════════════════
-   ARTICLES SHOWCASE — hero-style band (mirrors the hero slider skin:
-   full-bleed art, dark overlay, ivory serif heading, gold eyebrow)
+   ARTICLES SHOWCASE — editorial block: heading above the art.
+   Art renders at natural aspect (width 100%, auto height) so the FULL
+   picture is always visible — no cropping, no upscaling.
    ═══════════════════════════════════════════════════════════════════ */
 
-.band {
-  position: relative;
-  height: 80svh;
-  min-height: 520px;
-  max-height: 760px;
-  overflow: hidden;
-  background: var(--charcoal);
+.section {
+  padding-top: var(--space-11);
+  padding-bottom: var(--space-11);
 }
 
-/* ── Art ─────────────────────────────────────────────────────────── */
-.bg {
-  position: absolute;
-  inset: 0;
-}
-
-.bg img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.bg .imgMobile { display: none; }
-
-.overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    125deg,
-    rgba(32, 32, 29, 0.72) 0%,
-    rgba(32, 32, 29, 0.40) 55%,
-    rgba(32, 32, 29, 0.15) 100%
-  );
-}
-
-/* ── Content ─────────────────────────────────────────────────────── */
-.content {
-  position: relative;
-  z-index: 10;
-  height: 100%;
+/* ── Header (above the picture) ──────────────────────────────────── */
+.header {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  gap: var(--space-5);
-  padding-top: var(--space-9);
-  padding-bottom: var(--space-9);
-  max-width: 680px;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-8);
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out);
 }
 
-.content.visible {
+.header.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-.eyebrow {
-  color: var(--gold-300) !important;
-}
-
 .heading {
   font-family: var(--font-serif);
-  font-size: clamp(44px, 6vw, 80px);
+  font-size: clamp(36px, 4.5vw, 60px);
   font-weight: 400;
-  line-height: 1.05;
-  letter-spacing: -0.025em;
-  color: var(--ivory);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--charcoal);
 }
 
 .heading em {
@@ -84,36 +46,40 @@
 
 .sub {
   font-family: var(--font-sans);
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 300;
   line-height: 1.7;
-  color: rgba(252, 250, 245, 0.8);
-  max-width: 420px;
+  color: var(--charcoal-muted);
+  max-width: 480px;
 }
+
+/* ── Art ─────────────────────────────────────────────────────────── */
+.art {
+  width: 100%;
+}
+
+.art img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.art .imgMobile { display: none; }
 
 /* ── Responsive ─────────────────────────────────────────────────── */
 @media (max-width: 768px) {
-  .band {
-    max-height: 640px;
+  .section {
+    padding-top: var(--space-9);
+    padding-bottom: var(--space-9);
   }
 
-  .bg .imgDesktop { display: none; }
-  .bg .imgMobile  { display: block; }
-
-  .content {
-    align-items: center;
-    text-align: center;
-    max-width: 100%;
-  }
-
-  .sub {
-    max-width: 100%;
-  }
+  .art .imgDesktop { display: none; }
+  .art .imgMobile  { display: block; }
 }
 
 /* Reduced motion — no entrance transition */
 @media (prefers-reduced-motion: reduce) {
-  .content {
+  .header {
     opacity: 1;
     transform: none;
     transition: none;

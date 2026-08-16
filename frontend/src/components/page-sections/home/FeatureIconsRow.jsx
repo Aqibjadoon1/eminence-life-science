@@ -9,12 +9,12 @@ const FEATURES = [
   {
     icon: <ShippingIcon />,
     title: 'Free Shipping',
-    body: 'Complimentary standard delivery on all orders over PKR 4,000 across Pakistan.',
+    body: 'Complimentary standard delivery on all orders above 4000 rupees, nationwide.',
   },
   {
     icon: <LockIcon />,
-    title: 'Secure Payments',
-    body: 'JazzCash, EasyPaisa, and Cash on Delivery — every transaction protected.',
+    title: 'WhatsApp Ordering',
+    body: 'Every order is confirmed personally over WhatsApp — clear, secure, no checkout friction.',
   },
   {
     icon: <SupportIcon />,

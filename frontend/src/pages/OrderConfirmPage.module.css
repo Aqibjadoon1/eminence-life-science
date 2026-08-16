@@ -99,21 +99,6 @@
   color: var(--charcoal-muted);
 }
 
-.itemPrice {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--charcoal);
-  white-space: nowrap;
-}
-
-.total {
-  display: flex;
-  justify-content: space-between;
-  font-size: 16px;
-  color: var(--charcoal);
-  padding-top: var(--space-2);
-}
-
 .actions {
   display: flex;
   gap: var(--space-3);

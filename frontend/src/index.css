@@ -324,27 +324,6 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: var(--radius-sm);
 }
 
-/* ── Price display — never bold-red, always understated ──────── */
-.price {
-  font-family: var(--font-sans);
-  font-size: 14px;
-  font-weight: 400;
-  color: var(--charcoal-muted);
-  letter-spacing: 0.02em;
-}
-
-.price-sale {
-  color: var(--charcoal);
-}
-
-.price-original {
-  text-decoration: line-through;
-  color: var(--charcoal-muted);
-  font-size: 12px;
-  margin-left: 6px;
-  opacity: 0.65;
-}
-
 /* ── Concern pill tags ───────────────────────────────────────── */
 .concern-tag {
   display: inline-flex;

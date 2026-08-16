@@ -10,7 +10,6 @@ import { useIntersectionObserver } from '../../../utils/useIntersectionObserver.
 import useCartStore      from '../../../store/useCartStore.js';
 import useWishlistStore  from '../../../store/useWishlistStore.js';
 import useToastStore     from '../../../store/useToastStore.js';
-import { formatPrice }   from '../../../utils/formatting.js';
 import styles from './TopPicksSection.module.css';
 
 export default function TopPicksSection() {
@@ -64,8 +63,6 @@ function TopPickCard({ product, delay }) {
   const wishlisted   = isWishlisted(product.id);
 
   const isLowStock  = product.stock > 0 && product.stock <= 10;
-  const isOnSale    = !!product.sale_price;
-  const displayPrice = product.sale_price ?? product.price;
   const image = product.image_urls?.[0] || 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=600&q=70';
 
   const handleWishlist = (e) => {
@@ -91,10 +88,10 @@ function TopPickCard({ product, delay }) {
       <Link to={`/product/${product.slug}`} className={styles.imageWrap} tabIndex={-1} aria-hidden="true">
         <img src={image} alt={product.name} width={480} height={580} loading="lazy" className={styles.image} />
 
-        {/* Subtle stock/sale badge — gold-outline pill, never red */}
-        {(isLowStock || isOnSale) && (
-          <span className={styles.badge} aria-label={isOnSale ? 'On Sale' : 'Low Stock'}>
-            {isOnSale ? `Save ${Math.round((1 - product.sale_price / product.price) * 100)}%` : 'Selling Fast'}
+        {/* Subtle stock badge — gold-outline pill, never red */}
+        {isLowStock && (
+          <span className={styles.badge} aria-label="Low Stock">
+            Selling Fast
           </span>
         )}
 
@@ -128,17 +125,6 @@ function TopPickCard({ product, delay }) {
         <Link to={`/product/${product.slug}`} className={styles.name}>
           {product.name}
         </Link>
-
-        <div className={styles.priceRow}>
-          {isOnSale ? (
-            <>
-              <span className={`price price-sale ${styles.salePrice}`}>{formatPrice(displayPrice)}</span>
-              <span className={`price price-original`}>{formatPrice(product.price)}</span>
-            </>
-          ) : (
-            <span className="price">{formatPrice(displayPrice)}</span>
-          )}
-        </div>
       </div>
     </article>
   );
