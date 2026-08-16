@@ -1,5 +1,5 @@
 import pool from './pool.js';
-import bcrypt from 'bcryptjs';
+import { ensureAdmin } from './admin_seed.js';
 
 const guard =
   `SELECT pg_get_constraintdef(oid) AS def
@@ -11,30 +11,19 @@ async function ensureAdminColumn() {
     `SELECT 1 FROM information_schema.columns
      WHERE table_name = 'users' AND column_name = 'is_admin'`
   );
-  if (rows.length) return false;
+  if (rows.length) {
+    await ensureAdmin(pool);
+    return false;
+  }
 
   await pool.query('BEGIN');
   await pool.query(`
     ALTER TABLE users
       ADD COLUMN IF NOT EXISTS is_admin BOOLEAN NOT NULL DEFAULT FALSE
   `);
-  const adminEmail = process.env.ADMIN_EMAIL;
-  const adminPassword = process.env.ADMIN_PASSWORD;
-  if (adminEmail && adminPassword) {
-    const hash = await bcrypt.hash(adminPassword, 12);
-    const existing = await pool.query('SELECT id FROM users WHERE email = $1', [adminEmail]);
-    if (existing.rows.length) {
-      await pool.query('UPDATE users SET is_admin = TRUE WHERE email = $1', [adminEmail]);
-    } else {
-      await pool.query(
-        'INSERT INTO users(name, email, password_hash, is_admin) VALUES($1,$2,$3,TRUE)',
-        ['Admin', adminEmail, hash]
-      );
-    }
-    console.log(`✅ Admin account ensured at boot for ${adminEmail}`);
-  }
   await pool.query('COMMIT');
   console.log('✅ Schema 005 applied at boot (users.is_admin)');
+  await ensureAdmin(pool);
   return true;
 }
 

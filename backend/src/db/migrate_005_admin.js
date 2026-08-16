@@ -5,7 +5,7 @@
  * Run: npm run db:migrate:005
  */
 import pool from './pool.js';
-import bcrypt from 'bcryptjs';
+import { ensureAdmin } from './admin_seed.js';
 
 async function migrate() {
   const client = await pool.connect();
@@ -16,21 +16,8 @@ async function migrate() {
         ADD COLUMN IF NOT EXISTS is_admin BOOLEAN NOT NULL DEFAULT FALSE
     `);
 
-    const adminEmail = process.env.ADMIN_EMAIL;
-    const adminPassword = process.env.ADMIN_PASSWORD;
-    if (adminEmail && adminPassword) {
-      const hash = await bcrypt.hash(adminPassword, 12);
-      const existing = await client.query('SELECT id FROM users WHERE email = $1', [adminEmail]);
-      if (existing.rows.length) {
-        await client.query('UPDATE users SET is_admin = TRUE WHERE email = $1', [adminEmail]);
-      } else {
-        await client.query(
-          'INSERT INTO users(name, email, password_hash, is_admin) VALUES($1,$2,$3,TRUE)',
-          ['Admin', adminEmail, hash]
-        );
-      }
-      console.log(`✅ Admin account ensured for ${adminEmail}`);
-    } else {
+    const seeded = await ensureAdmin(client);
+    if (!seeded) {
       console.log('ℹ️  ADMIN_EMAIL/ADMIN_PASSWORD not set — skipping admin seed');
     }
 
