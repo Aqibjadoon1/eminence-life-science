@@ -1125,6 +1125,19 @@ Final report must include: the admin URL `/admin`, the admin email + password us
 
 ---
 
+## Execution Record (completed 2026-08-16)
+
+Shipped on `main` (`3a50839..3ed9776`): T1–T9 all done, final review 11/11 PASS.
+
+- **Prod credentials (env vars on API service):** `ADMIN_EMAIL=admin@eminence.com`, `ADMIN_PASSWORD=EminenceAdmin@2026!`. Boot guard seeded the admin on first deploy with vars; prod login verified `is_admin=true`. Password change = future feature.
+- **Fix commits beyond the plan drafts (recorded deviations):**
+  - `836c135` — AdminPage waits for boot `/me` before redirect (redirect race found by T8 harness).
+  - `fbfd77d` — `frontend/.env.production` added: `VITE_API_URL=https://eminence-api.onrender.com/api` (**must include the `/api` suffix** — `${BASE_URL}/path` segments don't add it; the first attempt with the bare origin caused 404s on every API call).
+  - `3ed9776` — same env fix, corrected suffix (see above).
+  - `d8b69da` — auth + cart cookies `SameSite=None` when `NODE_ENV=production` (cross-site frontend→API on Render), clearCookie matches options.
+- **Verification:** local CDP `verify_admin_flow.cjs` 25/25; prod live smoke 7/7 (admin login, storefront data, admin navbar link, `/admin` tabs+rows, 403-gate redirect for normal user). One throwaway prod test account `smoke<ts>@example.com` exists (inert).
+- **Security note (pre-existing, not feature-introduced):** the Render API token `rnd_JOVDgKdvz6PUSiTTcMzKLfEf8aNb` is committed in this plan file (lines 1092/1103) — recommend rotating it via Render when convenient.
+
 ## Self-Review Notes (run before starting)
 
 - Spec coverage: navbar gating ✓ (Task 7), /admin tabs ✓ (Task 6), add/edit/hide/show with all fields ✓ (Task 4/6), env-driven admin seed ✓ (Task 1), 403 for non-admin ✓ (Task 2/8), storefront active-only filter already exists (Task 8 asserts), no pricing surfaced ✓ (Task 6 form label + Task 8(e)).
