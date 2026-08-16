@@ -6,7 +6,10 @@ import pool from '../db/pool.js';
 const COOKIE_OPTS = {
   httpOnly: true,
   secure: process.env.NODE_ENV === 'production',
-  sameSite: 'lax',
+  // Cross-site (frontend origin -> API origin on Render) cookies must be
+  // SameSite=None; browsers reject None without Secure, and Lax is never
+  // sent on cross-site fetch. Keep Lax for http local dev.
+  sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
   maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
 };
 
@@ -83,7 +86,7 @@ export async function login(req, res, next) {
 }
 
 export function logout(_req, res) {
-  res.clearCookie('token');
+  res.clearCookie('token', { httpOnly: true, secure: process.env.NODE_ENV === 'production', sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax' });
   res.json({ message: 'Logged out successfully.' });
 }
 

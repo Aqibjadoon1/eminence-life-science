@@ -1,4 +1,12 @@
 import pool from '../db/pool.js';
+
+// Same cross-site rules as the auth token cookie (SameSite=None on prod).
+const SESSION_COOKIE_OPTS = {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === 'production',
+  sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+  maxAge: 30 * 24 * 60 * 60 * 1000,
+};
 import { v4 as uuidv4 } from 'uuid';
 
 /** Resolves or creates a cart for the current request */
@@ -49,7 +57,7 @@ export async function getCart(req, res, next) {
     const items = await client.query(CART_ITEMS_QUERY, [cartId]);
 
     if (resolved.sessionId) {
-      res.cookie('session_id', resolved.sessionId, { httpOnly: true, maxAge: 30 * 24 * 60 * 60 * 1000 });
+      res.cookie('session_id', resolved.sessionId, SESSION_COOKIE_OPTS);
     }
     return res.json({ data: items.rows });
   } catch (err) {
@@ -78,7 +86,7 @@ export async function addToCart(req, res, next) {
 
     const items = await client.query(CART_ITEMS_QUERY, [cartId]);
     if (resolved.sessionId) {
-      res.cookie('session_id', resolved.sessionId, { httpOnly: true, maxAge: 30 * 24 * 60 * 60 * 1000 });
+      res.cookie('session_id', resolved.sessionId, SESSION_COOKIE_OPTS);
     }
     res.json({ data: items.rows });
   } catch (err) {
@@ -187,7 +195,7 @@ export async function mergeCart(req, res, next) {
 
     // Remove guest cart
     await client.query('DELETE FROM carts WHERE id = $1', [guestCartId]);
-    res.clearCookie('session_id');
+    res.clearCookie('session_id', SESSION_COOKIE_OPTS);
 
     const items = await client.query(CART_ITEMS_QUERY, [userCartId]);
     res.json({ data: items.rows });
