@@ -176,11 +176,11 @@ Note: the admin seed (`ensureAdmin`) is deliberately decoupled from the column-e
 
 - [ ] **Step 4: Set local admin credentials + run migration**
 
-Append to `backend/.env` (and `backend/.env.example`):
+Append to `backend/.env` (and `backend/.env.example` — the example uses a placeholder password):
 
 ```
 ADMIN_EMAIL=admin@eminence.com
-ADMIN_PASSWORD=LocalAdmin123!
+ADMIN_PASSWORD=LocalAdmin123!   # .env.example: change-me
 ```
 
 Run locally (backend workdir):
