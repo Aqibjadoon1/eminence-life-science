@@ -9,6 +9,7 @@ import { canonicalUrl } from '../utils/seo.js';
 import styles from './AdminPage.module.css';
 
 export default function AdminPage() {
+  const isLoading = useAuthStore((s) => s.isLoading);
   const isAdmin = useAuthStore((s) => s.user?.is_admin === true);
   const navigate = useNavigate();
 
@@ -20,17 +21,19 @@ export default function AdminPage() {
   const addToast = useToastStore((s) => s.addToast);
 
   useEffect(() => {
+    if (isLoading) return; // wait for boot /me check before any redirect
     if (!isAdmin) navigate('/', { replace: true });
-  }, [isAdmin, navigate]);
+  }, [isLoading, isAdmin, navigate]);
 
   useEffect(() => {
-    if (!isAdmin) return;
+    if (isLoading || !isAdmin) return;
     AdminProductService.getAll()
       .then((r) => setProducts(r.data))
       .catch((err) => addToast(err.message || 'Could not load products.', 'error'))
       .finally(() => setLoading(false));
-  }, [isAdmin, addToast]);
+  }, [isLoading, isAdmin, addToast]);
 
+  if (isLoading) return null;
   if (!isAdmin) return null;
 
   const refresh = () => AdminProductService.getAll().then((r) => setProducts(r.data));
