@@ -22,6 +22,7 @@ import WishlistPage     from './pages/WishlistPage.jsx';
 import SciencePage      from './pages/SciencePage.jsx';
 import ContactPage      from './pages/ContactPage.jsx';
 import NotFoundPage     from './pages/NotFoundPage.jsx';
+import AdminPage        from './pages/AdminPage.jsx';
 
 export default function App() {
   const initAuth  = useAuthStore((s) => s.init);
@@ -48,6 +49,7 @@ export default function App() {
           <Route path="/checkout"            element={<CheckoutPage />} />
           <Route path="/order/:id"           element={<OrderConfirmPage />} />
           <Route path="/account"             element={<AccountPage />} />
+          <Route path="/admin"               element={<AdminPage />} />
           <Route path="/wishlist"            element={<WishlistPage />} />
           <Route path="/our-science"         element={<SciencePage />} />
           <Route path="/contact"             element={<ContactPage />} />
