@@ -15,7 +15,8 @@
     "db:expand": "node src/db/migrate_002_expand_catalog.js && node src/db/seed_002_new_products.js",
     "db:setup": "node src/db/migrate.js && node src/db/migrate_002_expand_catalog.js && node src/db/seed.js && node src/db/seed_002_new_products.js && node src/db/migrate_003_product_photos.js",
     "db:migrate:003": "node src/db/migrate_003_product_photos.js",
-    "db:migrate:004": "node src/db/migrate_004_whatsapp_orders.js"
+    "db:migrate:004": "node src/db/migrate_004_whatsapp_orders.js",
+    "db:migrate:005": "node src/db/migrate_005_admin.js"
   },
   "dependencies": {
     "bcryptjs": "2.4.3",
