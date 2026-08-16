@@ -12,7 +12,7 @@ const COOKIE_OPTS = {
 
 function signToken(user) {
   return jwt.sign(
-    { id: user.id, email: user.email, name: user.name },
+    { id: user.id, email: user.email, name: user.name, is_admin: user.is_admin === true },
     process.env.JWT_SECRET,
     { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
   );
@@ -34,7 +34,7 @@ export async function register(req, res, next) {
 
     const password_hash = await bcrypt.hash(password, 12);
     const result = await pool.query(
-      'INSERT INTO users(name, email, password_hash, phone) VALUES($1,$2,$3,$4) RETURNING id, name, email, phone, created_at',
+      'INSERT INTO users(name, email, password_hash, phone) VALUES($1,$2,$3,$4) RETURNING id, name, email, phone, created_at, is_admin',
       [name, email, password_hash, phone || null]
     );
 
@@ -58,7 +58,7 @@ export async function login(req, res, next) {
     const { email, password } = req.body;
 
     const result = await pool.query(
-      'SELECT id, name, email, phone, password_hash FROM users WHERE email = $1',
+      'SELECT id, name, email, phone, password_hash, is_admin FROM users WHERE email = $1',
       [email]
     );
 
@@ -90,7 +90,7 @@ export function logout(_req, res) {
 export async function me(req, res, next) {
   try {
     const result = await pool.query(
-      'SELECT id, name, email, phone, created_at FROM users WHERE id = $1',
+      'SELECT id, name, email, phone, created_at, is_admin FROM users WHERE id = $1',
       [req.user.id]
     );
     if (!result.rows.length) {
