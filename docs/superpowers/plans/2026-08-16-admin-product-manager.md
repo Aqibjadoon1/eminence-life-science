@@ -18,11 +18,40 @@
 
 **Files:**
 - Create: `backend/src/db/migrate_005_admin.js`
+- Create: `backend/src/db/admin_seed.js` (shared admin upsert helper, used by the migration AND the boot guard)
 - Modify: `backend/package.json` (add `db:migrate:005` script)
 - Modify: `backend/src/db/ensure_schema.js` (boot-time guard, same as 004)
 - Commit after verification
 
-- [ ] **Step 1: Write the migration file**
+- [ ] **Step 1: Write the migration file + shared seed helper**
+
+Create `backend/src/db/admin_seed.js`:
+
+```js
+import bcrypt from 'bcryptjs';
+
+/**
+ * Ensure the ADMIN_EMAIL account exists and is an admin.
+ * Idempotent upsert. No-op unless ADMIN_EMAIL + ADMIN_PASSWORD are set.
+ * @param {import('pg').PoolClient|import('pg').Pool} client
+ * @returns {Promise<boolean>} true if an admin was ensured
+ */
+export async function ensureAdmin(client) {
+  const adminEmail = process.env.ADMIN_EMAIL;
+  const adminPassword = process.env.ADMIN_PASSWORD;
+  if (!adminEmail || !adminPassword) return false;
+
+  const hash = await bcrypt.hash(adminPassword, 12);
+  await client.query(
+    `INSERT INTO users(name, email, password_hash, is_admin)
+     VALUES($1,$2,$3,TRUE)
+     ON CONFLICT (email) DO UPDATE SET is_admin = TRUE`,
+    ['Admin', adminEmail, hash]
+  );
+  console.log(`✅ Admin account ensured for ${adminEmail}`);
+  return true;
+}
+```
 
 Create `backend/src/db/migrate_005_admin.js`:
 
@@ -34,7 +63,7 @@ Create `backend/src/db/migrate_005_admin.js`:
  * Run: npm run db:migrate:005
  */
 import pool from './pool.js';
-import bcrypt from 'bcryptjs';
+import { ensureAdmin } from './admin_seed.js';
 
 async function migrate() {
   const client = await pool.connect();
@@ -45,21 +74,8 @@ async function migrate() {
         ADD COLUMN IF NOT EXISTS is_admin BOOLEAN NOT NULL DEFAULT FALSE
     `);
 
-    const adminEmail = process.env.ADMIN_EMAIL;
-    const adminPassword = process.env.ADMIN_PASSWORD;
-    if (adminEmail && adminPassword) {
-      const hash = await bcrypt.hash(adminPassword, 12);
-      const existing = await client.query('SELECT id FROM users WHERE email = $1', [adminEmail]);
-      if (existing.rows.length) {
-        await client.query('UPDATE users SET is_admin = TRUE WHERE email = $1', [adminEmail]);
-      } else {
-        await client.query(
-          'INSERT INTO users(name, email, password_hash, is_admin) VALUES($1,$2,$3,TRUE)',
-          ['Admin', adminEmail, hash]
-        );
-      }
-      console.log(`✅ Admin account ensured for ${adminEmail}`);
-    } else {
+    const seeded = await ensureAdmin(client);
+    if (!seeded) {
       console.log('ℹ️  ADMIN_EMAIL/ADMIN_PASSWORD not set — skipping admin seed');
     }
 
@@ -93,7 +109,7 @@ Replace the body of `backend/src/db/ensure_schema.js` with:
 
 ```js
 import pool from './pool.js';
-import bcrypt from 'bcryptjs';
+import { ensureAdmin } from './admin_seed.js';
 
 const guard =
   `SELECT pg_get_constraintdef(oid) AS def
@@ -105,30 +121,19 @@ async function ensureAdminColumn() {
     `SELECT 1 FROM information_schema.columns
      WHERE table_name = 'users' AND column_name = 'is_admin'`
   );
-  if (rows.length) return false;
+  if (rows.length) {
+    await ensureAdmin(pool);
+    return false;
+  }
 
   await pool.query('BEGIN');
   await pool.query(`
     ALTER TABLE users
       ADD COLUMN IF NOT EXISTS is_admin BOOLEAN NOT NULL DEFAULT FALSE
   `);
-  const adminEmail = process.env.ADMIN_EMAIL;
-  const adminPassword = process.env.ADMIN_PASSWORD;
-  if (adminEmail && adminPassword) {
-    const hash = await bcrypt.hash(adminPassword, 12);
-    const existing = await pool.query('SELECT id FROM users WHERE email = $1', [adminEmail]);
-    if (existing.rows.length) {
-      await pool.query('UPDATE users SET is_admin = TRUE WHERE email = $1', [adminEmail]);
-    } else {
-      await pool.query(
-        'INSERT INTO users(name, email, password_hash, is_admin) VALUES($1,$2,$3,TRUE)',
-        ['Admin', adminEmail, hash]
-      );
-    }
-    console.log(`✅ Admin account ensured at boot for ${adminEmail}`);
-  }
   await pool.query('COMMIT');
   console.log('✅ Schema 005 applied at boot (users.is_admin)');
+  await ensureAdmin(pool);
   return true;
 }
 
@@ -167,6 +172,8 @@ export async function ensureLatestSchema() {
 }
 ```
 
+Note: the admin seed (`ensureAdmin`) is deliberately decoupled from the column-exists check — only the ALTER is gated on the column. The seed runs on EVERY boot where `ADMIN_EMAIL` + `ADMIN_PASSWORD` are set (idempotent upsert), so a later deploy that sets the env vars still creates the admin even though the column already exists.
+
 - [ ] **Step 4: Set local admin credentials + run migration**
 
 Append to `backend/.env` (and `backend/.env.example`):
@@ -195,7 +202,7 @@ Expected: one row `email: admin@eminence.com, is_admin: true`
 - [ ] **Step 6: Commit**
 
 ```
-git add backend/src/db/migrate_005_admin.js backend/src/db/ensure_schema.js backend/package.json backend/.env backend/.env.example
+git add backend/src/db/migrate_005_admin.js backend/src/db/admin_seed.js backend/src/db/ensure_schema.js backend/package.json backend/.env backend/.env.example
 git commit --no-verify -m "feat(backend): migration 005 — admin users + env-driven seed"
 ```
 
@@ -1097,6 +1104,8 @@ curl.exe -s -X PUT "https://api.render.com/v1/services/srv-da05vq67bikc73efbr2g/
 ```
 
 (Repeat with `ADMIN_PASSWORD` and the chosen prod password — the password is revealed to the user in the final report; the boot guard seeds the admin on the next deploy.)
+
+> **Note:** the boot guard seeds the admin on ANY boot where `ADMIN_EMAIL`/`ADMIN_PASSWORD` are set — env var changes alone don't trigger a deploy, so redeploy after setting vars.
 
 - [ ] **Step 3: Redeploy backend (env vars don't auto-trigger), verify live**
 
