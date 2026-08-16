@@ -4,6 +4,7 @@ import HeroSection        from '../components/page-sections/home/HeroSection.jsx
 import TrustStrip         from '../components/page-sections/home/TrustStrip.jsx';
 import TopPicksSection    from '../components/page-sections/home/TopPicksSection.jsx';
 import PromoBannerPair    from '../components/page-sections/home/PromoBannerPair.jsx';
+import ArticlesShowcase   from '../components/page-sections/home/ArticlesShowcase.jsx';
 import DealCountdownSection from '../components/page-sections/home/DealCountdownSection.jsx';
 import NewsletterSection  from '../components/page-sections/home/NewsletterSection.jsx';
 import LifestyleStrip     from '../components/page-sections/home/LifestyleStrip.jsx';
@@ -35,6 +36,9 @@ export default function HomePage() {
 
       {/* 4. Two promo tiles side by side */}
       <PromoBannerPair />
+
+      {/* 4b. All Articles hero-style band — desktop + mobile art */}
+      <ArticlesShowcase />
 
       {/* 5. Limited time deal — countdown + 6 product grid */}
       <DealCountdownSection />
