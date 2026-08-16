@@ -11,6 +11,7 @@ import cartRoutes       from './routes/cart.js';
 import orderRoutes      from './routes/orders.js';
 import newsletterRoutes from './routes/newsletter.js';
 import addressRoutes    from './routes/addresses.js';
+import adminRoutes       from './routes/admin.js';
 import { getSitemap }   from './controllers/sitemap.js';
 import { getWhatsappConfig } from './controllers/config.js';
 import { ensureLatestSchema } from './db/ensure_schema.js';
@@ -52,6 +53,7 @@ app.use('/api/cart',       cartRoutes);
 app.use('/api/orders',     orderRoutes);
 app.use('/api/newsletter', newsletterRoutes);
 app.use('/api/addresses',  addressRoutes);
+app.use('/api/admin/products', adminRoutes);
 
 // ── Health check ─────────────────────────────────────────────
 app.get('/api/health', (_req, res) => {
