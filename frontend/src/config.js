@@ -43,6 +43,11 @@ export const API = {
 
   // Public config
   WHATSAPP_ORDER: `${BASE_URL}/config/whatsapp-order`,
+
+  // Admin (products only — guarded by requireAdmin)
+  ADMIN_PRODUCTS:       `${BASE_URL}/admin/products`,
+  ADMIN_PRODUCT:        (id) => `${BASE_URL}/admin/products/${id}`,
+  ADMIN_PRODUCT_ACTIVE: (id) => `${BASE_URL}/admin/products/${id}/active`,
 };
 
 export const SORT_OPTIONS = [
