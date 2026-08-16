@@ -28,6 +28,7 @@ export default function Navbar() {
   const cartCount    = useCartStore((s) => s.items.reduce((n, i) => n + i.quantity, 0));
   const openCart     = useCartStore((s) => s.openCart);
   const isLoggedIn   = useAuthStore((s) => s.isLoggedIn);
+  const isAdmin      = useAuthStore((s) => s.user?.is_admin === true);
   const wishCount    = useWishlistStore((s) => s.items.length);
   const { data: categories } = useCategories();
 
@@ -118,6 +119,13 @@ export default function Navbar() {
                   Contact Us
                 </NavLink>
               </li>
+              {isAdmin && (
+                <li>
+                  <NavLink to="/admin" className={({ isActive }) => isActive ? styles.navActive : ''}>
+                    Admin
+                  </NavLink>
+                </li>
+              )}
             </ul>
           </nav>
 
@@ -306,6 +314,9 @@ export default function Navbar() {
                 <li><Link to="/our-science" onClick={() => setMenuOpen(false)}>Our Science</Link></li>
                 <li><Link to="/contact"     onClick={() => setMenuOpen(false)}>Contact Us</Link></li>
                 <li><Link to="/account"     onClick={() => setMenuOpen(false)}>My Account</Link></li>
+                {isAdmin && (
+                  <li><Link to="/admin" onClick={() => setMenuOpen(false)}>Admin</Link></li>
+                )}
                 <li><Link to="/wishlist"    onClick={() => setMenuOpen(false)}>Wishlist {wishCount > 0 && `(${wishCount})`}</Link></li>
               </ul>
             </nav>
