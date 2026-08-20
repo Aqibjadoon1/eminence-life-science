@@ -2,8 +2,8 @@
 #
 # Resources created:
 #   - PostgreSQL        : eminence-db
-#   - Web service (API) : eminence-api  (https://eminence-api.onrender.com)
-#   - Static site (UI)  : eminence-frontend (https://eminence-frontend.onrender.com)
+#   - Web service (API) : eminence-api-v2  (https://eminence-api-v2.onrender.com)
+#   - Static site (UI)  : eminence-frontend-v2 (https://eminence-frontend-v2.onrender.com)
 #
 # Deploy: New +  →  Blueprint  →  "eminence-life-science" repo
 
@@ -38,7 +38,7 @@ services:
       - key: NODE_ENV
         value: production
       - key: CLIENT_URL
-        value: https://eminence-frontend.onrender.com
+        value: https://eminence-frontend-v2.onrender.com
 
   # ── Frontend (React static build) ─────────────────────────────
   - type: web
@@ -54,7 +54,7 @@ services:
       # Proxy API calls to the backend service (order matters — must come first)
       - type: rewrite
         source: /api/*
-        destination: https://eminence-api.onrender.com/api/*
+        destination: https://eminence-api-v2.onrender.com/api/*
       # SPA fallback — serve index.html for all client-side routes so deep links
       # (/shop, /product/:slug, …) return 200 instead of 404. Render skips rules
       # when a real file exists at the path, so static assets are unaffected.

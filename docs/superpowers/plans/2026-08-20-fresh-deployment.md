@@ -94,7 +94,7 @@ Needed keys: `DATABASE_URL`, `DATABASE_SSL`, `JWT_SECRET`, `WHATSAPP_ORDER_NUMBE
 For each key in the list above (except `CLIENT_URL`), write a temp JSON body and PUT:
 ```powershell
 Set-Content -Path "C:\Users\jadoo\AppData\Local\Temp\opencode\ev.json" -Value '{"value":"<copied value>"}'
-curl.exe -s -X PUT "https://api.render.com/v1/services/<new-api-id>/env-vars/<KEY>" -H "Accept: application/json" -H "Content-Type: application/json" -H "Authorization: Bearer rnd_JOVDGkKdvz6PUSiTTcMzKLfEf8aNb" -d "@C:\Users\jadoo\AppData\Local\Temp\opencode\ev.json"
+curl.exe -s -X PUT "https://api.render.com/v1/services/<new-api-id>/env-vars/<KEY>" -H "Accept: application/json" -H "Content-Type: application/json" -H "Authorization: Bearer rnd_JOVDgKdvz6PUSiTTcMzKLfEf8aNb" -d "@C:\Users\jadoo\AppData\Local\Temp\opencode\ev.json"
 ```
 Expected: 200 per key. (`NODE_ENV` value: `production`.)
 
@@ -305,6 +305,20 @@ Verify the push from Step 4 triggered a deploy on API v2 (auto-deploy works):
 curl.exe -s "https://api.render.com/v1/services/<new-api-id>/deploys?limit=2" -H "Accept: application/json" -H "Authorization: Bearer rnd_JOVDgKdvz6PUSiTTcMzKLfEf8aNb"
 ```
 Expected: latest deploy `live` with the docs commit id.
+
+---
+
+## Execution Record (2026-08-20, completed)
+
+All 7 tasks executed; extra operational fixes beyond the plan's steps:
+
+- **API v2:** `srv-da3krirrn74s73fh8j80` → `https://eminence-api-v2.onrender.com` (health 200, admin login `is_admin:true`). Env vars: all 8 set (copied from old API; `CLIENT_URL` = frontend v2). Note: Render API service domain quirks — `type: web_service` (not `web`), `autoDeploy: "yes"` string, node settings in `serviceDetails.envSpecificDetails`, owner field `ownerID`.
+- **Static v2:** `srv-da3l5qc9v7es7390k2cg` → `https://eminence-frontend-v2.onrender.com` (`type: static_site`, build `npm install && npm run build`, publish `./dist`).
+- **Fix 1 (plan gap):** static first deploy served index.html but 404'd `/assets/*` — redeploy with `X-Render-Clear-Cache: clear` fixed it.
+- **Fix 2 (plan gap):** deep SPA paths 404'd — added rewrite rule `/* → /index.html` via `PUT /v1/services/<static-id>/routes` (body = bare JSON array `[{"type":"rewrite","source":"/*","destination":"/index.html"}]`; routes are a sub-resource, not part of serviceDetails). Route id `rdr-da3l9u2jnfac739l4m80`.
+- **Smoke:** `verify_v2_smoke.cjs` 7/7 PASS (same suite as the old stack, constants repointed).
+- **Old services deleted:** `DELETE` HTTP 204 for API `srv-da05vq67bikc73efbr2g` + static `srv-da0601u7bikc73efc9r0`; both old URLs 404 now. (Transient 502 on v2 API right after deletion — Render instance blip; recovered, health 200.)
+- **Docs:** render.yaml + robots.txt + sitemap.js comment + spec 2026-08-20 + admin plan execution record updated. Last push auto-deploy verified on API v2.
 
 ---
 

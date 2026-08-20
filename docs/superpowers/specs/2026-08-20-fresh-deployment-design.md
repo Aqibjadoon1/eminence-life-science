@@ -61,3 +61,17 @@ Repo change: `frontend/.env.production` becomes:
 - Render API token is already committed in the plan doc (pre-existing issue; rotating is the user's call).
 - Deleting services is permanent and releases subdomains — done last, after green verification.
 - Shared DB between old and new API briefly during rollout is harmless (same data, read-mostly; rate limiter is per-instance).
+
+---
+
+## Execution Record (2026-08-20, completed)
+
+- **New API service:** id `srv-da3krirrn74s73fh8j80`, URL `https://eminence-api-v2.onrender.com` — all 8 env vars set (DB/JWT/etc. copied; `CLIENT_URL` and repo `VITE_API_URL` point at v2). Health 200; admin login `is_admin:true`.
+- **New static service:** id `srv-da3l5qc9v7es7390k2cg`, URL `https://eminence-frontend-v2.onrender.com`. Build `npm install && npm run build`, publish `./dist`, rootDir `frontend`, auto-deploy on, SPA rewrite `/* → /index.html` (route id `rdr-da3l9u2jnfac739l4m80`).
+- **Operational findings (deviations from plan steps):**
+  1. First deploy of the static service served index.html but the hashed `/assets/*` files 404'd — fixed by a manual redeploy with `X-Render-Clear-Cache: clear`.
+  2. Non-root paths (`/shop`, `/admin`, …) 404'd until the SPA rewrite rule was added via `PUT /v1/services/<id>/routes` (body is a bare JSON array; `routes` is NOT part of serviceDetails and the services object GET omits it).
+  3. Old static had this rule from its original blueprint era (`render.yaml`), hence old links 200'd deep paths.
+- **Verification:** `verify_v2_smoke.cjs` (repointed copy of the prod smoke): **7/7 PASS**.
+- **Old services deleted (HTTP 204):** API `srv-da05vq67bikc73efbr2g`, static `srv-da0601u7bikc73efc9r0` — both old URLs now return 404.
+- **Docs updated:** `render.yaml`, `frontend/public/robots.txt` (sitemap → API v2 origin), `backend/src/controllers/sitemap.js` comment, plan/spec execution records. Repo `VITE_API_URL` = `https://eminence-api-v2.onrender.com/api`.

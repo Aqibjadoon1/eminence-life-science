@@ -1138,6 +1138,14 @@ Shipped on `main` (`3a50839..3ed9776`): T1–T9 all done, final review 11/11 PAS
 - **Verification:** local CDP `verify_admin_flow.cjs` 25/25; prod live smoke 7/7 (admin login, storefront data, admin navbar link, `/admin` tabs+rows, 403-gate redirect for normal user). One throwaway prod test account `smoke<ts>@example.com` exists (inert).
 - **Security note (pre-existing, not feature-introduced):** the Render API token `rnd_JOVDgKdvz6PUSiTTcMzKLfEf8aNb` is committed in this plan file (lines 1092/1103) — recommend rotating it via Render when convenient.
 
+## Deploy update (2026-08-20): fresh services, old links retired
+
+The prod links referenced earlier in this plan are retired. New deployment (see `docs/superpowers/specs/2026-08-20-fresh-deployment-design.md` + plan `2026-08-20-fresh-deployment.md`):
+
+- **New frontend:** `https://eminence-frontend-v2.onrender.com` (admin UI at `/admin`; same admin creds `admin@eminence.com` / `EminenceAdmin@2026!` — env vars carried to the new API service)
+- **New API:** `https://eminence-api-v2.onrender.com`
+- Same Postgres reused — all products/orders/users/admin unchanged. Old services deleted; old URLs return 404. Admin smoke suite re-verified 7/7 on the new stack.
+
 ## Self-Review Notes (run before starting)
 
 - Spec coverage: navbar gating ✓ (Task 7), /admin tabs ✓ (Task 6), add/edit/hide/show with all fields ✓ (Task 4/6), env-driven admin seed ✓ (Task 1), 403 for non-admin ✓ (Task 2/8), storefront active-only filter already exists (Task 8 asserts), no pricing surfaced ✓ (Task 6 form label + Task 8(e)).

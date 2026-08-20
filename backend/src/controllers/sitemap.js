@@ -1,7 +1,7 @@
 /**
  * Sitemap controller — generates an XML sitemap from the live database.
- * Served at GET /api/sitemap.xml (proxied to this origin on the frontend,
- * e.g. https://eminence-frontend.onrender.com/api/sitemap.xml).
+ * Served at GET /api/sitemap.xml (proxied on the frontend origin,
+ * e.g. https://eminence-frontend-v2.onrender.com/api/sitemap.xml).
  *
  * Kept in sync with the DB automatically: categories with at least one active
  * product and every active product are included on each request.

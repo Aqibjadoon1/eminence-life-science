@@ -14,4 +14,4 @@ Disallow: /api/
 
 # Sitemap is generated from the database by the backend and proxied here.
 # NOTE: update this URL if a custom domain is added (render.yaml has one commented out).
-Sitemap: https://eminence-frontend.onrender.com/api/sitemap.xml
+Sitemap: https://eminence-api-v2.onrender.com/api/sitemap.xml
